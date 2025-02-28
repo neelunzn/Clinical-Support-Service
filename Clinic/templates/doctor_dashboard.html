@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Dashboard</title>
+    <link rel="stylesheet" href="doctor_dashboard.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+Khojki&display=swap">
+</head>
+<body>
+
+    <div class="total-container">
+        <!-- Sidebar -->
+        <div class="container">
+            <div class="sidebar">
+                <div class="sidebar-img">
+                    <img src="doctor_profile.svg" alt="Doctor">
+                </div>
+                <h2>Dr. Nushrat Zahan</h2>
+                <div class="sidebar-text">
+                    <p>MBBS, FCPS - MD (Medicine), MCPS</p>
+                </div>
+                <div class="sidebar-items">
+                    <ul>
+                        <li><img src="dashboard-icon.svg" alt="Dashboard Icon"> Dashboard</li>
+                        <li ><img src="appointment-icon.svg" alt="Appointment Icon"> Appointment Page</li>
+                        <li><img src="profile-icon.svg" alt="Profile Icon"> Profile</li>
+                        <li><img src="settings-icon.svg" alt="Settings Icon"> Settings</li>
+                        <li><img src="logout-icon.svg" alt="Logout Icon"> Logout</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Total Patient, Today Patient, Today Appointments -->
+            <div class="content">
+                <div class="header">
+                    <div class="dashboard-display">
+                        <div class="text-dashboard-display">
+                            <p>Dashboard</p>
+                        </div>
+                        <div class="icons">
+                            <div class="icon-link">
+                                <img src="email-icon.svg" alt="Email Icon">
+                            </div>
+                            <div class="icon-link">
+                                <img src="notification-icon.svg" alt="Notification Icon">
+                            </div>
+                            <div class="search-container">
+                                <input type="text" placeholder="Search">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="cards">
+                    <div class="card">
+                        <div class="icon-container">
+                            <div class="icon-border">
+                                <img src="total-patient-icon.svg" alt="Total Patient Icon">
+                            </div>
+                        </div>
+                        <div class="text-container">
+                            <div class="title-text-container">
+                                <p>Total Patient</p> 
+                            </div>
+                            <div class="important-text-container">
+                                <h3>2000+</h3> 
+                            </div>
+                            <div class="date-text-container">
+                                <p>Till Today</p> 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="icon-container">
+                            <div class="icon-border">
+                                <img src="today-patient-icon.svg" alt="Today Patient Icon">
+                            </div>
+                        </div>
+                        <div class="text-container">
+                            <div class="title-text-container">
+                                <p>Today Patient</p> 
+                            </div>
+                            <div class="important-text-container">
+                                <h3>068</h3> 
+                            </div>
+                            <div class="date-text-container">
+                                <p>21 Dec-2021</p> 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="icon-container">
+                            <div class="icon-border">
+                                <img src="today-appointments-icon.svg" alt="Today Appointments Icon">
+                            </div>
+                        </div>
+                        <div class="text-container">
+                            <div class="title-text-container">
+                                <p>Today Appointments</p> 
+                            </div>
+                            <div class="important-text-container">
+                                <h3>085</h3> 
+                            </div>
+                            <div class="date-text-container">
+                                <p>21 Dec-2021</p> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Today Appointment, Next Patient Details -->
+                <div class="today-next-content">
+                    <div class="main-content">
+                        <div class="appointment-card">
+                            <h3>Today Appointment</h3>
+                            <div class="appointment-header">
+                                <span>Patient</span>
+                                <span>Name/Diagnosis</span>
+                                <span>Time</span>
+                            </div>
+                            <div class="appointment-item">
+                                <img src="profile-icon.svg" alt="Patient Image">
+                                <div class="info">
+                                    <span class="name">Sagor Ahmed</span>
+                                    <span class="diagnosis">Mental Problem</span>
+                                </div>
+                                <div class="status-box">On Going</div>
+                            </div>
+                            <div class="appointment-item">
+                                <img src="profile-icon.svg" alt="Patient Image">
+                                <div class="info">
+                                    <span class="name">Nur Jahan</span>
+                                    <span class="diagnosis">Mon kharap</span>
+                                </div>
+                                <div class="status-box">5:30 PM</div>
+                            </div>
+                            <div class="appointment-item">
+                                <img src="profile-icon.svg" alt="Patient 3">
+                                <div class="info">
+                                    <span class="name">Sultan Mahmud</span>
+                                    <span class="diagnosis">Pet Betha</span>
+                                </div>
+                                <div class="status-box">7:00 PM</div>
+                            </div>
+                            <div class="appointment-item">
+                                <img src="profile-icon.svg" alt="Patient 4">
+                                <div class="info">
+                                    <span class="name">Ilman Farabi</span>
+                                    <span class="diagnosis">Mental Problem</span>
+                                </div>
+                                <div class="status-box">8:30 PM</div>
+                            </div>
+                            <button class="see-all">See All</button>
+                        </div>
+                        
+                        
+                        <div class="patient-card">
+                            <h3>Next Patient Details</h3>
+                            <div class="patient-info">
+                                <img src="profile-icon.svg" alt="Patient Image">
+                                <div>
+                                    <span class="name">Golam Kibria</span>
+                                    <span class="diagnosis">Health Checkup</span>
+                                </div>
+                                <div>
+                                    <span class="name">Patient ID</span>
+                                    <span class="diagnosis">0220092020005</span>
+                                </div>
+                            </div>
+                            <div class="details-card">
+                                <div class="details-grid">
+                                    <div>
+                                        <strong>D.O.B</strong>
+                                        <p>15 January 1989</p>
+                                    </div>
+                                    <div>
+                                        <strong>Sex</strong>
+                                        <p>Male</p>
+                                    </div>
+                                    <div>
+                                        <strong>Weight</strong>
+                                        <p>59 Kg</p>
+                                    </div>
+                                    <div>
+                                        <strong>Last Appointment</strong>
+                                        <p>15 Dec-2021</p>
+                                    </div>
+                                    <div>
+                                        <strong>Height</strong>
+                                        <p>172 cm</p>
+                                    </div>
+                                    <div>
+                                        <strong>Reg. Date</strong>
+                                        <p>10 Dec 2021</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="patient-history">
+                                <span>Patient History</span>
+                                <div class="tags">
+                                    <span class="tag">Asthma</span>
+                                    <span class="tag">Hypertension</span>
+                                    <span class="tag">Fever</span>
+                                </div>
+                            </div>
+                            <div class="contact-info">
+                                <button class="contact-btn">📞 (080) 555-0102</button>
+                                <button class="action-btn">Document</button>
+                                <button class="action-btn">Chat</button>
+                            </div>
+                            <button class="last_prescription">Last Prescriptions</button>
+                        </div>
+                    </div>
+                </div>
+                
+
+                <!-- Patients Review, Appointment Request -->
+                <div class="additional-content">
+                    <div class="review-card">
+                        <h3>Patients Review</h3>
+                        <div class="review-item">
+                            <span>Excellent</span>
+                            <div class="progress-bar">
+                                <div class="progress excellent"></div>
+                            </div>
+                        </div>
+                        <div class="review-item">
+                            <span>Great</span>
+                            <div class="progress-bar">
+                                <div class="progress great"></div>
+                            </div>
+                        </div>
+                        <div class="review-item">
+                            <span>Good</span>
+                            <div class="progress-bar">
+                                <div class="progress good"></div>
+                            </div>
+                        </div>
+                        <div class="review-item">
+                            <span>Average</span>
+                            <div class="progress-bar">
+                                <div class="progress average"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="request-card">
+                        <h3>Appointment Request</h3>
+                        <div class="request-item">
+                            <img src="profile-icon.svg" alt="Patient Image">
+                            <div class="info">
+                                <span class="name">Md. Rakibul Islam</span>
+                                <span class="condition">Cold</span>
+                            </div>
+                            <div class="actions">
+                                <div class="icon">
+                                    <img src="accept-icon.svg" alt="Accept">
+                                </div>
+                                <div class="icon">
+                                    <img src="cross-icon.svg" alt="Reject">
+                                </div>
+                                <div class="icon">
+                                    <img src="chat-icon.svg" alt="Chat" class="icon">
+                                </div> 
+                            </div>
+                        </div>
+                        <div class="request-item">
+                            <img src="profile-icon.svg" alt="Patient Image">
+                            <div class="info">
+                                <span class="name">Syeda Tasmiah Chowdhury Orpa</span>
+                                <span class="condition">Over Switting</span>
+                            </div>
+                            <div class="actions">
+                                <div class="icon">
+                                    <img src="accept-icon.svg" alt="Accept">
+                                </div>
+                                <div class="icon">
+                                    <img src="cross-icon.svg" alt="Reject">
+                                </div>
+                                <div class="icon">
+                                    <img src="chat-icon.svg" alt="Chat" class="icon">
+                                </div> 
+                            </div>
+                        </div>
+                        <button class="see-all-request">See All</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>
