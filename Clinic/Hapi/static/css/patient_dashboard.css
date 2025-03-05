@@ -167,7 +167,7 @@ input[type="text"]:focus {
 }
 
 .content {
-    padding: 20px;
+    margin: 20px;
     width: 100%;
 }
 
@@ -189,6 +189,7 @@ input[type="text"]:focus {
 
 /* Intro, Booking Count, Find Specialist */
 .intro-book {
+    width: 60%;
     margin-right: 20px;
 }
 
@@ -259,6 +260,7 @@ input[type="text"]:focus {
     border-radius: 2%;
     display: flex;
     justify-content: space-between;
+    gap: 10px;
     margin-top: 10px;
     margin-bottom: 10px;
     width: 100%;
@@ -275,7 +277,7 @@ input[type="text"]:focus {
     display: flex;
     align-items: center;
     padding: 10px 20px;
-    width: 150px;
+    width: 33%;
 }
 
 .icon {
@@ -518,8 +520,7 @@ input[type="text"]:focus {
 .timeline-container {
     width: 100%;
     padding: 20px;
-    margin-top: 10px;
-    margin: 0 auto;
+    margin-top: 20px;
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     background-color: #f7f7f7;
@@ -537,9 +538,9 @@ input[type="text"]:focus {
     background-color: #fff;
     border-radius: 10px;
     padding: 20px;
-    margin-top: -3%;
     max-height: 300px;
     overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .timeline {
@@ -685,7 +686,7 @@ button:hover {
 }
 
 .right {
-    width: 50%;
+    width: 40%;
     margin-left: 40px;
     margin-right: 40px;
 }

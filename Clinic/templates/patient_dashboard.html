@@ -1,60 +1,65 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
    <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Doctor Dashboard</title>
-      <link rel="stylesheet" href="patient_dashboard.css">
+      <title>Patient Dashboard</title>
+      <link rel="stylesheet" href="{% static 'css/patient_dashboard.css' %}">
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+Khojki&display=swap">
    </head>
    <body>
       <!-- Sidebar -->
       <div class="container">
          <div class="sidebar">
-            <div class="sidebar-profile-name">
-               <div class="sidebar-img">
-                  <!-- Example usage of static path for an image -->
-                  <img src="doctor_profile.svg" alt="User">
-               </div>
-               <h2>Nushrat Zahan</h2>
-               <div class="sidebar-text">
-                  <p>nushrat7xx7@gmail.com</p>
-               </div>
+            <div class="sidebar-img">
+               <!-- Example usage of static path for an image -->
+               <img src="{% static 'images/doctor_profile.svg' %}" alt="User">
+            </div>
+            <h2>{{fhir_data.name.0.given.0}} {{fhir_data.name.0.family}}</h2>
+            <div class="sidebar-text">
+               <p>nushrat7xx7@gmail.com</p>
             </div>
             <div class="sidebar-items">
                <ul>
+                  <a href="{% url 'Hapi:dashboard' %}"> 
+                     <li>
+                        <img src="{% static 'images/dashboard-icon.svg' %}" alt="Dashboard Icon"> 
+                           Dashboard
+                     </li>
+                  </a>
                   <li>
-                     <img src="dashboard-icon.svg" alt="Dashboard Icon"> 
-                     <a href="patient_dashboard.html"> Dashboard</a>
+                     <img src="{% static 'images/doctor-appointment-icon.svg' %}" alt="Appointment Icon"> 
+                     <a href="{% url 'Hapi:request_appointment' %}"> Doctor Appointments </a>
                   </li>
+                  <a href="{% url 'Hapi:doctor-list' %}"> 
+                     <li>
+                        <img src="{% static 'images/doctors-list.svg' %}" alt="Doctors List Icon"> 
+                           Doctors 
+                     </li>
+                  </a>
                   <li>
-                     <img src="doctor-appointment-icon.svg" alt="Appointment Icon"> 
-                     <a href="book_appointment.html"> Doctor Appointments </a>
-                  </li>
-                  <li>
-                     <img src="doctors-list.svg" alt="Doctors List Icon"> 
-                     <a href="doctors-list.html"> Doctors </a>
-                  </li>
-                  <li>
-                     <img src="pill-icon.svg" alt="Medication Icon"> 
+                     <img src="{% static 'images/pill-icon.svg' %}" alt="Medication Icon"> 
                      <a href="medication.html"> Medication</a>
                   </li>
                   <li>
-                     <img src="report-file-icon.svg" alt="Lab Icon"> 
+                     <img src="{% static 'images/report-file-icon.svg' %}" alt="Lab Icon"> 
                      <a href="lab.html"> Lab </a>
                   </li>
                   <li>
-                     <img src="profile-icon.svg" alt="Profile Icon">
+                     <img src="{% static 'images/profile-icon.svg' %}" alt="Profile Icon">
                      <a href="patient-profile.html"> Profile</a>
                   </li>
                   <li>
-                     <img src="settings-icon.svg" alt="Settings Icon"> 
+                     <img src="{% static 'images/settings-icon.svg' %}" alt="Settings Icon"> 
                      <a href="settings.html"> Settings</a>
                   </li>
-                  <li>
-                     <img src="logout-icon.svg" alt="Logout Icon"> 
-                     <a href="logout.html"> Logout</a>
-                  </li>
+                  <a href="{% url 'Hapi:logout' %}" style="color: #4dabf7;"> 
+                     <li>
+                        <img src="{% static 'images/logout-icon.svg' %}" alt="Logout Icon"> 
+                           Logout 
+                     </li>
+                  </a>
                </ul>
             </div>
          </div>
@@ -67,10 +72,10 @@
                   </div>
                   <div class="icons">
                      <div class="icon-link">
-                        <img src="email-icon.svg" alt="Email Icon">
+                        <img src="{% static 'images/email-icon.svg' %}" alt="Email Icon">
                      </div>
                      <div class="icon-link">
-                        <img src="notification-icon.svg" alt="Notification Icon">
+                        <img src="{% static 'images/notification-icon.svg' %}" alt="Notification Icon">
                      </div>
                   </div>
                </div>
@@ -88,7 +93,7 @@
                            <button class="book-appointment">Book Appointment</button>
                         </div>
                         <div class="intro-image">
-                           <img src="patient-intro-image.svg" alt="Intro Image">
+                           <img src="{% static 'images/patient-intro-image.svg' %}" alt="Intro Image">
                         </div>
                      </section>
                   </div>
@@ -96,7 +101,7 @@
                   <div class="booking-summary">
                      <div class="card">
                         <div class="icon" style="background-color: #ec7794;">
-                           <img src="total-booking.svg" alt="Total Booking">
+                           <img src="{% static 'images/total-booking.svg' %}" alt="Total Booking">
                         </div>
                         <div class="booking-text">
                            <h3>33</h3>
@@ -105,7 +110,7 @@
                      </div>
                      <div class="card">
                         <div class="icon" style="background-color: #4dabf7;">
-                           <img src="booking-success.svg" alt="Booking Success">
+                           <img src="{% static 'images/booking-success.svg' %}" alt="Booking Success">
                         </div>
                         <div class="booking-text">
                            <h3>22</h3>
@@ -114,7 +119,7 @@
                      </div>
                      <div class="card">
                         <div class="icon" style="background-color: #22b8cf;">
-                           <img src="booking-cancel.svg" alt="Booking Cancel">
+                           <img src="{% static 'images/booking-cancel.svg' %}" alt="Booking Cancel">
                         </div>
                         <div class="booking-text">
                            <h3>12</h3>
@@ -128,7 +133,7 @@
                         <h2>Ongoing Treatment</h2>
                         <div class="treatment-card">
                            <div class="icon" style="background-color: #86becf;">
-                              <img src="pill-icon.svg" alt="Pill">
+                              <img src="{% static 'images/pill-icon.svg' %}" alt="Pill">
                            </div>
                            <div class="details">
                               <h3>Slimvastatin</h3>
@@ -160,16 +165,16 @@
                            <tr>
                               <td>1</td>
                               <td>
-                                 <img src="report-file-icon.svg" alt="File Icon">
+                                 <img src="{% static 'images/report-file-icon.svg' %}" alt="File Icon">
                               </td>
                               <td><a href="#">Blood Report</a></td>
                               <td>May-28, 2024</td>
                               <td>
                                  <button class="delete-btn">
-                                 <img src="delete-icon.svg" alt="Delete Icon">
+                                 <img src="{% static 'images/delete-icon.svg' %}" alt="Delete Icon">
                                  </button>
                                  <button class="download-btn">
-                                 <img src="download-icon.svg" alt="Download Icon">
+                                 <img src="{% static 'images/download-icon.svg' %}" alt="Download Icon">
                                  </button>
                               </td>
                            </tr>
@@ -185,7 +190,7 @@
                        <p>Choose your category</p>
                        <div class="specialist-card">
                            <div class="icon" style="background-color: #ffe3e3;">
-                               <img src="dentist.svg" alt="Dentist">
+                               <img src="{% static 'images/dentist.svg' %}" alt="Dentist">
                             </div>
                             <div class="details">
                                 <h3>Dentist</h3>
@@ -193,13 +198,13 @@
                             </div>
                             <div class="arrow">
                                 <a href="dentist-page.html">
-                                    <img src="profile-icon.svg" alt="Arrow">
+                                    <img src="{% static 'images/arrow-icon.svg' %}" alt="Arrow">
                                 </a>
                             </div>
                         </div>
                         <div class="specialist-card">
                             <div class="icon" style="background-color: #e3f2fd;">
-                        <img src="cardiologist.svg" alt="Cardiologist">
+                        <img src="{% static 'images/cardiologist.svg' %}" alt="Cardiologist">
                      </div>
                      <div class="details">
                          <h3>Cardiologist</h3>
@@ -207,13 +212,13 @@
                         </div>
                         <div class="arrow">
                             <a href="cardiologist-page.html">
-                                <img src="profile-icon.svg" alt="Arrow">
+                                <img src="{% static 'images/arrow-icon.svg' %}" alt="Arrow">
                             </a>
                         </div>
                     </div>
                     <div class="specialist-card">
                         <div class="icon" style="background-color: #e8eaf6;">
-                            <img src="general-physician.svg" alt="General Physician">
+                            <img src="{% static 'images/general-physician.svg' %}" alt="General Physician">
                         </div>
                         <div class="details">
                             <h3>General Physician</h3>
@@ -221,7 +226,7 @@
                         </div>
                         <div class="arrow">
                             <a href="physician-page.html">
-                                <img src="profile-icon.svg" alt="Arrow">
+                                <img src="{% static 'images/arrow-icon.svg' %}" alt="Arrow">
                             </a>
                         </div>
                     </div>

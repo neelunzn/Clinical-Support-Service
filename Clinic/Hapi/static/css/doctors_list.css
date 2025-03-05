@@ -1,0 +1,285 @@
+body { 
+    font-family: 'Bebas', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+}
+
+.total-container {
+    display: flex;
+    margin: 0;
+    padding: 10px;
+    background-color: #ffffff;
+}
+
+.container {
+    display: flex;
+    width: 100%;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 230px;
+    height: 98%;
+    background-color: #f0efef;
+    padding: 10px;
+    padding-top: 10px;
+    margin-left: 10px;
+    border-radius: 0px;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+}
+
+.sidebar-profile-name {
+    text-align: center; 
+    margin-bottom: 20px;
+}
+
+.sidebar-img img {
+    align-items: center;
+    width: 70px; 
+    height: 70px;
+    padding-left: 70px;
+    padding-top: 20px;
+    border-radius: 50%; 
+    object-fit: cover;
+}
+
+.sidebar h2 {
+    text-align: center;
+    font-size: 18px;
+    color: #0b5aaf;
+    margin: 10px 0;
+}
+
+.sidebar-text p {
+    text-align: center;
+    color: #007bff;
+    font-size: 10px;
+    text-decoration: underline;
+    text-decoration-color: #007bff;
+}
+
+.sidebar-items ul {
+    list-style: none;
+    padding: 10px;
+}
+
+.sidebar-items ul li {
+    margin: 15px 0;
+    font-size: 16px;
+    text-decoration: none;
+    color: #000000;
+    cursor: pointer;
+    padding: 10px;
+    padding-inline: 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+}
+
+.sidebar-items ul li img {
+    width: 25px; 
+    height: 25px;
+    border-radius: 10%;
+    margin-right: 15px;
+}
+
+.sidebar-items ul li:hover {
+    background-color: #89b0eb;
+}
+
+.sidebar-items ul li.active {
+    background-color: #007bff;
+    color: #fff;
+}
+
+/* Doctors Card */
+.content {
+    margin: 20px;
+    width: 100%;
+}
+
+/* Search Doctor and Department */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header input {
+    padding: 10px;
+    font-size: 16px;
+    width: 30%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.header button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Card */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+}
+
+.card img {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+}
+
+.card h3 {
+    margin: 10px 0;
+}
+
+.card p {
+    color: #666;
+    margin: 5px 0;
+}
+
+.card .stars {
+    color: #f39c12;
+    margin: 10px 0;
+}
+
+.card button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.card button:hover {
+    background-color: #0056b3; 
+}
+
+/* Book Appointment Form Design */
+body.modal-open {
+    overflow: hidden;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 90%;
+    max-width: 500px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    position: relative;
+    z-index: 2;
+}
+
+.close {
+    color: #ff0101;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+select {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    background-color: #f9f9f9;
+    color: #333;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="date"],
+input[type="time"],
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0 10px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.input-like {
+    width: 100%;
+    padding: 10px;
+    margin: 5px 0 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    background-color: #f9f9f9;
+    color: #333;
+    font-size: 14px;
+    line-height: 1.5;
+    font-weight: bold;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+}
+
+button:hover {
+    background-color: #45a049;
+}

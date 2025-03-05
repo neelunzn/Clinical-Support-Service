@@ -1,0 +1,225 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/doctors_list.css' %}">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+Khojki&display=swap">
+</head>
+<body>
+    <div class="total-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-img">
+               <!-- Example usage of static path for an image -->
+               <img src="{% static 'images/doctor_profile.svg' %}" alt="User">
+            </div>
+            <h2>{{fhir_data.name.0.given.0}} {{fhir_data.name.0.family}}</h2>
+            <div class="sidebar-text">
+               <p>nushrat7xx7@gmail.com</p>
+            </div>
+            <div class="sidebar-items">
+               <ul>
+                  <a href="{% url 'Hapi:dashboard' %}"> 
+                     <li>
+                        <img src="{% static 'images/dashboard-icon.svg' %}" alt="Dashboard Icon"> 
+                           Dashboard
+                     </li>
+                  </a>
+                  <li>
+                     <img src="{% static 'images/doctor-appointment-icon.svg' %}" alt="Appointment Icon"> 
+                     <a href="{% url 'Hapi:request_appointment' %}"> Doctor Appointments </a>
+                  </li>
+                  <a href="{% url 'Hapi:doctor-list' %}"> 
+                     <li>
+                        <img src="{% static 'images/doctors-list.svg' %}" alt="Doctors List Icon"> 
+                           Doctors 
+                     </li>
+                  </a>
+                  <li>
+                     <img src="{% static 'images/pill-icon.svg' %}" alt="Medication Icon"> 
+                     <a href="medication.html"> Medication</a>
+                  </li>
+                  <li>
+                     <img src="{% static 'images/report-file-icon.svg' %}" alt="Lab Icon"> 
+                     <a href="lab.html"> Lab </a>
+                  </li>
+                  <li>
+                     <img src="{% static 'images/profile-icon.svg' %}" alt="Profile Icon">
+                     <a href="patient-profile.html"> Profile</a>
+                  </li>
+                  <li>
+                     <img src="{% static 'images/settings-icon.svg' %}" alt="Settings Icon"> 
+                     <a href="settings.html"> Settings</a>
+                  </li>
+                  <a href="{% url 'Hapi:logout' %}" style="color: #4dabf7;"> 
+                     <li>
+                        <img src="{% static 'images/logout-icon.svg' %}" alt="Logout Icon"> 
+                           Logout 
+                     </li>
+                  </a>
+               </ul>
+            </div>
+         </div>
+        
+        <!-- Doctors Card -->
+        <div class="content">
+            <div class="header">
+                <input type="text" placeholder="Search By Doctors Name">
+                <input type="text" placeholder="Search By Department">
+                <button>Search</button>
+            </div>
+            <div class="grid">
+                <div class="card">
+                    <img src="{% static 'images/profile-icon.svg' %}" alt="Doctor">
+                    <h3>Dr. Clive Nathan</h3>
+                    <p>Gynecologist, General Physician</p>
+                    <p>8 Years Experience</p>
+                    <div class="stars">★★★★★</div>
+                    <button>Book Appointment</button>
+                </div>
+                <div class="card">
+                    <img src="{% static 'images/profile-icon.svg' %}" alt="Doctor">
+                    <h3>Dr. Clive Nathan</h3>
+                    <p>Gynecologist, General Physician</p>
+                    <p>8 Years Experience</p>
+                    <div class="stars">★★★★★</div>
+                    <button>Book Appointment</button>
+                </div>
+                <div class="card">
+                    <img src="{% static 'images/profile-icon.svg' %}" alt="Doctor">
+                    <h3>Dr. Clive Nathan</h3>
+                    <p>Gynecologist, General Physician</p>
+                    <p>8 Years Experience</p>
+                    <div class="stars">★★★★★</div>
+                    <button>Book Appointment</button>
+                </div>
+                <div class="card">
+                    <img src="{% static 'images/profile-icon.svg' %}" alt="Doctor">
+                    <h3>Dr. Clive Nathan</h3>
+                    <p>Gynecologist, General Physician</p>
+                    <p>8 Years Experience</p>
+                    <div class="stars">★★★★★</div>
+                    <button>Book Appointment</button>
+                </div>
+                <div class="card">
+                    <img src="{% static 'images/profile-icon.svg' %}" alt="Doctor">
+                    <h3>Dr. Clive Nathan</h3>
+                    <p>Gynecologist, General Physician</p>
+                    <p>8 Years Experience</p>
+                    <div class="stars">★★★★★</div>
+                    <button>Book Appointment</button>
+                </div>
+                <div class="card">
+                    <img src="{% static 'images/profile-icon.svg' %}" alt="Doctor">
+                    <h3>Dr. Clive Nathan</h3>
+                    <p>Gynecologist, General Physician</p>
+                    <p>8 Years Experience</p>
+                    <div class="stars">★★★★★</div>
+                    <button>Book Appointment</button>
+                </div>
+                <div class="card">
+                    <img src="{% static 'images/profile-icon.svg' %}" alt="Doctor">
+                    <h3>Dr. Clive Nathan</h3>
+                    <p>Gynecologist, General Physician</p>
+                    <p>8 Years Experience</p>
+                    <div class="stars">★★★★★</div>
+                    <button>Book Appointment</button>
+                </div>
+                <div class="card">
+                    <img src="{% static 'images/profile-icon.svg' %}" alt="Doctor">
+                    <h3>Dr. Clive Nathan</h3>
+                    <p>Gynecologist, General Physician</p>
+                    <p>8 Years Experience</p>
+                    <div class="stars">★★★★★</div>
+                    <button>Book Appointment</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Book Appointment -->
+        <div id="appointmentModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Book Appointment</h2>
+                <form>
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" placeholder="Enter Name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Doctor's Name</label>
+                        <div class="input-like">Dr. Nushrat Zahan</div>
+                    </div>
+                    <div class="form-group">
+                        <label>Doctor's Speciality</label>
+                        <div class="input-like">Cardiologist</div>
+                    </div>
+                    <div class="form-group">
+                        <label>Doctor's Qualification</label>
+                        <div class="input-like">MBBS, FCPS - MD (Medicine), MCPS</div>
+                    </div>
+                    <div class="form-group">
+                        <label>Doctor's Email</label>
+                        <div class="input-like">nushrat7xx7@gmail.com</div>
+                    </div>
+                    <div class="form-group">
+                        <label>Preferred Appointment Date</label>
+                        <input type="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Preferred Time</label>
+                        <select required>
+                            <option value="">Select Time</option>
+                            <option>5:00 PM</option>
+                            <option>5:30 PM</option>
+                            <option>6:00 PM</option>
+                            <option>6:30 PM</option>
+                            <option>7:00 PM</option>
+                            <option>7:30 PM</option>
+                            <option>8:00 PM</option>
+                            <option>8:30 PM</option>
+                            <option>9:00 PM</option>
+                            <option>9:30 PM</option>
+                            <option>10:00 PM</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Comment</label>
+                        <textarea placeholder="Comment"></textarea>
+                    </div>
+                    <button type="submit">Confirm Appointment</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var modal = document.getElementById("appointmentModal");
+            var btns = document.querySelectorAll(".card button");
+            var span = document.getElementsByClassName("close")[0];
+    
+            btns.forEach(function(btn) {
+                btn.onclick = function() {
+                    modal.style.display = "flex";
+                    document.body.classList.add('modal-open');
+                }
+            });
+    
+            span.onclick = function() {
+                modal.style.display = "none";
+                document.body.classList.remove('modal-open');
+            }
+    
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                    document.body.classList.remove('modal-open');
+                }
+            }
+        });
+    </script>
+</body>
+</html>

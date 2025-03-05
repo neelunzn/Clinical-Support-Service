@@ -5,8 +5,9 @@ from django.contrib.auth import login, authenticate, logout
 from .forms import UserRegistrationForm, DoctorRegistrationForm, PatientRegistrationForm, LoginForm
 from .fhir_utils import create_practitioner_in_fhir, create_patient_in_fhir, get_fhir_data  # Import the functions
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.contrib import messages
+from datetime import datetime, timedelta
 
 FHIR_SERVER_URL = 'http://localhost:8080/fhir/'
 
@@ -130,8 +131,64 @@ def user_dashboard(request):
             return render(request, 'patient_dashboard.html', {'fhir_data': fhir_data})
     else:
         return render(request, 'dashboard.html', {'error': 'No FHIR data found.'})
+
+@login_required
+def doctor_list(request):
+    response = requests.get(f"{FHIR_SERVER_URL}/Practitioner")
+    doctors = []
+    if response.status_code == 200:
+        doctors = response.json().get("entry", [])
+    return render(request, 'doctors_list.html', {'doctors': doctors})
     
 # Appointment Management
+@login_required
+def request_appointment(request):
+    if request.method == 'POST':
+        # Get data from the request
+        patient_id = request.POST.get('patient_id')
+        doctor_id = request.POST.get('doctor_id')
+        date_time_str = request.POST.get('date_time')  # Assuming this is in ISO format
+        reason = request.POST.get('reason')
+
+        # Convert the date_time string to a datetime object
+        date_time = datetime.fromisoformat(date_time_str)
+
+        # Calculate the end time (30 minutes later)
+        end_time = date_time + timedelta(minutes=30)
+
+        # Create an Appointment resource
+        appointment = {
+            "resourceType": "Appointment",
+            "status": "proposed",
+            "participant": [
+                {
+                    "actor": {
+                        "reference": f"Patient/{patient_id}"
+                    },
+                    "status": "accepted"
+                },
+                {
+                    "actor": {
+                        "reference": f"Practitioner/{doctor_id}"
+                    },
+                    "status": "needs-action"
+                }
+            ],
+            "start": date_time.isoformat(),
+            "end": end_time.isoformat(),
+            "description": reason
+        }
+
+        # Post the Appointment resource to the FHIR server
+        
+        res = requests.post(f"{FHIR_SERVER_URL}/Appointment", json=appointment)
+        if res.status_code == 200:
+            appointments = res.json().get('entry', [])
+            return render(request, "doctor_appoinment.html")
+        else:
+            return JsonResponse({'error': 'Failed to fetch appointments', 'details': res.text}, status=400)
+    return render(request, "doctor_appoinment.html")
+    
 @login_required
 def pending_appointments(request):
     user = request.user

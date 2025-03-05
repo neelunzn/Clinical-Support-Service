@@ -1,101 +1,157 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Doctor Appointment Form</title>
-    <link rel="stylesheet" href="doctor_appoinment.css">
+    <link rel="stylesheet" href="{% static 'css/doctor_appoinment.css' %}">
     <link href="https://fonts.googleapis.com/css2?family=Baloo&display=swap" rel="stylesheet">
-
-<script type="text/javascript" src="https://gc.kis.v2.scr.kaspersky-labs.com/FD126C42-EBFA-4E12-B309-BB3FDD723AC1/main.js?attr=6xuraZiiNLSYHQSGYkZoAbiyo9237cdPGqy_PZ9L73T7Iof5mG4W5SMt2gYvbBuqL_LwaAM_uHKzbeYUPTe7phJLp4dpIHkQG93R2Gje5WlHWE8ks4SP-Ryg4vcg1m2F3RJ7MAPun889sUsXN3SfdtHd-nf_w-P9ZUC952zeIJRgLCeGG0Hso39T1zHHOY7ZNSkQDd4he9e4NgOTEhdFPp-7I3cdwu0hCzaDVmwR0eWfWmupIcol_jg-_plQXT99Yvkuj6HeTG1hjh3Q0K8stbjvhfYUvIctZtgXDthgo9Q89edQDrDwhcSG7_OjSAVmvb_qotislV51V4dSEz6cL8A0cI9cmvwZvsin92A5DZB6pHRkunaH4IRVsEh7zd8AA_5oL0PCV0SMdWvVHyVDDUXb1iLQ-nuqVUqxBxh2_a-6W81S51moJKE7_QEY1oRgMCTNS67b_hEXMeRTRkw0yGTEU_FoKlDtcqwpEoaPPQPiVrlJ4xmBEmsJ-w2tWG3-IPnV7fyoMFr64V_lYqAVNUL5W_GfjYIWlO9WCJDTTi0GEgIgG3jvI1cgtWEhx2SgbCaIBvukhlOE7hsHCFxs7vqPpj7NJQeUubE-WFzn0mIAvQKR2R5cBCltgyp7a7AxPfnHako5q4TJ5N1cFNZxsA" charset="UTF-8"></script></head>
+</head>
 <body>
     <!-- Top Layer with Logo & User Name -->
-    <div class="top-bar">
-        <div class="logo">
-            <img src="doctor.png" alt="CDS Care Logo">
-            <span>CDS Care</span>
-        </div>
-        <div class="user-name">
-            <span id="user">Nushrat</span>
-        </div>
-    </div>
-
-    <div class="container">
-        <div class="form-header">
-            <div class="form-title">
-                <h2>Doctor Appointment Form</h2>
+    <div class="total-container">
+        <div class="sidebar">
+            <div class="sidebar-img">
+               <!-- Example usage of static path for an image -->
+               <img src="{% static 'images/doctor_profile.svg' %}" alt="User">
             </div>
-            
-            <p>Fill the form below and we will get back soon to <br>
-                you for more updates and plan your <br>
-                appointment.</p>
-        </div>
-        <div class="form-body">
-            <div class="doctor-img">
-                <img src="doctor.png" alt="Doctor Illustration">
+            <h2>{{fhir_data.name.0.given.0}} {{fhir_data.name.0.family}}</h2>
+            <div class="sidebar-text">
+               <p>nushrat7xx7@gmail.com</p>
             </div>
-            <form>
-                <!-- Name -->
-                <label for="name">Name</label>
-                <div class="name-fields">
-                    <div class="input-group">
-                        <input type="text" id="name" placeholder="Enter Name" required>
+            <div class="sidebar-items">
+                <ul>
+                    <a href="{% url 'Hapi:dashboard' %}"> 
+                        <li>
+                           <img src="{% static 'images/dashboard-icon.svg' %}" alt="Dashboard Icon"> 
+                              Dashboard
+                        </li>
+                     </a>
+                     <a href="{% url 'Hapi:request_appointment' %}"> 
+                        <li>
+                            <img src="{% static 'images/doctor-appointment-icon.svg' %}" alt="Appointment Icon"> 
+                                Doctor Appointments 
+                        </li>
+                    </a>
+                    <li>
+                        <img src="{% static 'images/doctors-list.svg' %}" alt="Doctors List Icon"> 
+                        <a href="doctors-list.html"> Doctors </a>
+                    </li>
+                    <li>
+                        <img src="{% static 'images/pill-icon.svg' %}" alt="Medication Icon"> 
+                        <a href="medication.html"> Medication</a>
+                    </li>
+                    <li>
+                        <img src="{% static 'images/report-file-icon.svg' %}" alt="Lab Icon"> 
+                        <a href="lab.html"> Lab </a>
+                    </li>
+                    <li>
+                        <img src="{% static 'images/profile-icon.svg' %}" alt="Profile Icon">
+                        <a href="patient-profile.html"> Profile</a>
+                    </li>
+                    <li>
+                        <img src="{% static 'images/settings-icon.svg' %}" alt="Settings Icon"> 
+                        <a href="settings.html"> Settings</a>
+                    </li>
+                    <a href="{% url 'Hapi:logout' %}" style="color: #4dabf7;"> 
+                        <li>
+                            <img src="{% static 'images/logout-icon.svg' %}" alt="Logout Icon"> 
+                            Logout 
+                        </li>
+                    </a>
+                </ul>
+            </div>
+        </div>
+        <div class="container">
+            <div class="top-bar">
+                <div class="logo">
+                    <img src="{% static 'images/doctor.png' %}" alt="CDS Care Logo">
+                    <span>CDS Care</span>
+                </div>
+                <div class="user-name">
+                    <span id="user">Nushrat</span>
+                </div>
+            </div>
+        
+            <div class="content">
+                <div class="form-header">
+                    <div class="form-title">
+                        <h2>Doctor Appointment Form</h2>
                     </div>
+                    
+                    <p>Fill the form below and we will get back soon to <br>
+                        you for more updates and plan your <br>
+                        appointment.</p>
                 </div>
-                <br>
-
-                <!-- Doctor's Name -->
-                <label for="doctor-name">Doctor's Name</label>
-                <div class="doctor-name-box">Dr. Nushrat Zahan</div>
-                <br>
-
-                <!-- Doctor's Speciality -->
-                <label for="doctor-speciality">Doctor's Speciality</label>
-                <div class="doctor-speciality-box">Cardiologist</div>
-                <br>
-
-                <!-- Doctor's Qualification -->
-                <label for="education">Doctor's Qualification</label>
-                <div class="doctor-qualification-box">MBBS, FCPS - MD (Medicine), MCPS</div>
-                <br>
-
-                <!-- Dctor's Email -->
-                <label for="email">Doctor's Email</label>
-                <div class="doctor-email-box">nushrat7xx7@gmail.com</div>
-                <br>
-                
-                <!-- Preferred Appointment Date & Time -->
-                <div class="form-group">
-                    <label for="appointment-date">Preferred Appointment Date</label>
-                    <input type="date" id="appointment-date" name="appointment-date">
+                <div class="form-body">
+                    <div class="doctor-img">
+                        <img src="{% static 'images/doctor.png' %}" alt="Doctor Illustration">
+                    </div>
+                    <form>
+                        <!-- Name -->
+                        <label for="name">Name</label>
+                        <div class="name-fields">
+                            <div class="input-group">
+                                <input type="text" id="name" placeholder="Enter Name" required>
+                            </div>
+                        </div>
+                        <br>
+        
+                        <!-- Doctor's Name -->
+                        <label for="doctor-name">Doctor's Name</label>
+                        <div class="doctor-name-box">Dr. Nushrat Zahan</div>
+                        <br>
+        
+                        <!-- Doctor's Speciality -->
+                        <label for="doctor-speciality">Doctor's Speciality</label>
+                        <div class="doctor-speciality-box">Cardiologist</div>
+                        <br>
+        
+                        <!-- Doctor's Qualification -->
+                        <label for="education">Doctor's Qualification</label>
+                        <div class="doctor-qualification-box">MBBS, FCPS - MD (Medicine), MCPS</div>
+                        <br>
+        
+                        <!-- Doctor's Email -->
+                        <!-- <label for="email">Doctor's Email</label>
+                        <div class="doctor-email-box">nushrat7xx7@gmail.com</div>
+                        <br>
+                         -->
+                        <!-- Preferred Appointment Date & Time -->
+                        <div class="form-group">
+                            <label for="appointment-date">Preferred Appointment Date</label>
+                            <input type="date" id="appointment-date" name="appointment-date">
+                        </div>
+                        <br>
+        
+                        <div class="form-group">
+                            <label for="appointment-time">Preferred Time</label>
+                            <select id="appointment-time" name="appointment-time">
+                                <option>5:00 PM</option>
+                                <option>5:30 PM</option>
+                                <option>6:00 PM</option>
+                                <option>6:30 PM</option>
+                                <option>7:00 PM</option>
+                                <option>7:30 PM</option>
+                                <option>8:00 PM</option>
+                                <option>8:30 PM</option>
+                                <option>9:00 PM</option>
+                                <option>9:30 PM</option>
+                                <option>10:00 PM</option>
+                            </select>
+                        </div> 
+                        <br>
+                        
+                        <!-- Comment -->
+                        <label for="comment">Comment</label>
+                        <textarea id="comment" rows="3"></textarea>               
+        
+                        <!-- Submit Button -->
+                        <button type="submit">Confirm Appointment</button>
+                    </form>
                 </div>
-                <br>
-
-                <div class="form-group">
-                    <label for="appointment-time">Preferred Time</label>
-                    <select id="appointment-time" name="appointment-time">
-                        <option>5:00 PM</option>
-                        <option>5:30 PM</option>
-                        <option>6:00 PM</option>
-                        <option>6:30 PM</option>
-                        <option>7:00 PM</option>
-                        <option>7:30 PM</option>
-                        <option>8:00 PM</option>
-                        <option>8:30 PM</option>
-                        <option>9:00 PM</option>
-                        <option>9:30 PM</option>
-                        <option>10:00 PM</option>
-                    </select>
-                </div> 
-                <br>
-                
-                <!-- Comment -->
-                <label for="comment">Comment</label>
-                <textarea id="comment" rows="3"></textarea>               
-
-                <!-- Submit Button -->
-                <button type="submit">Confirm Appointment</button>
-            </form>
+            </div>
         </div>
     </div>
 </body>

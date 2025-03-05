@@ -11,6 +11,9 @@ urlpatterns = [
     path('/profile/doctor/', views.doctor_profile, name='doctor_profile'),
     path('/logout/', views.user_logout, name='logout'),
 
+    path('/doctors/', views.doctor_list, name='doctor-list'),
+
     #Appointment
+    path('/appointment/', views.request_appointment, name='request_appointment'),
     path("/pending-appointments/", views.pending_appointments, name="pending_appointments"),
 ]
