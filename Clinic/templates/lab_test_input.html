@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lab Test Result Form</title>
+    <link rel="stylesheet" href="lab_test_input.css" />
+    
+    
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Enter Lab Test Result</h1>
+      <input type="hidden" id="patientReference" value="Patient/12345">
+
+      <!-- Category Dropdown -->
+      <label for="category">Select Category:</label>
+      <select name="category" id="category" onchange="updateTestType()">
+        <option value="" disabled selected>Select One</option>
+        <option value="laboratory">Laboratory</option>
+        <option value="imaging">Imaging Investigations</option>
+        <option value="pathology">Pathology / Histopathology</option>
+        <option value="cardiology">Cardiology</option>
+        <option value="gastroenterology">Gastroenterology</option>
+        <option value="productQuality">Product Quality Tests</option>
+      </select>
+
+      <!-- Test Type Dropdown -->
+      <label for="testType">Select Test Type:</label>
+      <select name="testType" id="testType">
+        <option value="" disabled selected>Select One</option>
+        <!-- Options will be populated dynamically based on category -->
+      </select>
+
+      <!-- Blood Glucose Input -->
+      <div id="numericInputs" class="hidden card">
+        <h3>Blood Glucose Test</h3>
+        <div class="form-group">
+          <label for="bloodGlucose">Blood Glucose (mg/dL):</label>
+          <input
+            type="number"
+            name="bloodGlucose"
+            id="bloodGlucose"
+            placeholder="Enter Blood Glucose value" required
+          />
+          <small>Ideal range: 70-100 mg/dL (Fasting)</small>
+        </div>
+      </div>
+
+      <!-- Blood Type Input -->
+      <div id="codedInputs" class="hidden card">
+        <h3>Blood Type</h3>
+        <div class="form-group">
+          <label for="bloodType">Blood Type:</label>
+          <select id="bloodType" name="bloodType" required>
+            <option value="O+">O+</option>
+            <option value="O-">O-</option>
+            <option value="A+">A+</option>
+            <option value="A-">A-</option>
+            <option value="B+">B+</option>
+            <option value="B-">B-</option>
+            <option value="AB+">AB+</option>
+            <option value="AB-">AB-</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Microbiology Input -->
+      <div id="textInputs" class="hidden card">
+        <h3>Microbiology Culture</h3>
+        <div class="form-group">
+          <label for="resultText">Result (e.g., no growth, positive):</label>
+          <textarea
+            name="resultText"
+            id="resultText"
+            placeholder="Enter result text" required
+          ></textarea>
+        </div>
+      </div>
+
+      <!-- Urinalysis Test Input -->
+      <div id="urinalysisInputs" class="hidden card">
+        <h3>Urinalysis Test</h3>
+        <div class="form-group">
+          <label for="ph">Urine pH:</label>
+          <input
+            type="number"
+            name="ph"
+            id="ph"
+            placeholder="Enter Urine pH value" required
+          />
+          <small>Ideal range: 4.5 - 8.0</small>
+        </div>
+        <div class="form-group">
+          <label for="specificGravity">Specific Gravity:</label>
+          <input
+            type="number"
+            name="specificGravity"
+            id="specificGravity"
+            placeholder="Enter Specific Gravity" required
+          />
+          <small>Ideal range: 1.005 - 1.030</small>
+        </div>
+        <div class="form-group">
+          <label for="protein">Protein (mg/dL):</label>
+          <input
+            type="number"
+            name="protein"
+            id="protein"
+            placeholder="Enter Protein value" required
+          />
+          <small>Ideal range: 0 - 8 mg/dL</small>
+        </div>
+      </div>
+
+      <!-- Cholesterol Test Input -->
+      <div id="cholesterolInputs" class="hidden card">
+        <h3>Cholesterol Test</h3>
+        <div class="form-group">
+          <label for="totalCholesterol">Total Cholesterol (mg/dL):</label>
+          <input
+            type="number"
+            name="totalCholesterol"
+            id="totalCholesterol"
+            placeholder="Enter Total Cholesterol value" required
+          />
+          <small>Ideal range: < 200 mg/dL</small>
+        </div>
+        <div class="form-group">
+          <label for="ldlCholesterol">LDL Cholesterol (mg/dL):</label>
+          <input
+            type="number"
+            name="ldlCholesterol"
+            id="ldlCholesterol"
+            placeholder="Enter LDL Cholesterol value" required
+          />
+          <small>Ideal range: < 100 mg/dL</small>
+        </div>
+        <div class="form-group">
+          <label for="hdlCholesterol">HDL Cholesterol (mg/dL):</label>
+          <input
+            type="number"
+            name="hdlCholesterol"
+            id="hdlCholesterol"
+            placeholder="Enter HDL Cholesterol value" required
+          />
+          <small>Ideal range: > 40 mg/dL (men), > 50 mg/dL (women)</small>
+        </div>
+        <div class="form-group">
+          <label for="triglycerides">Triglycerides (mg/dL):</label>
+          <input
+            type="number"
+            name="triglycerides"
+            id="triglycerides"
+            placeholder="Enter Triglycerides value" required
+          />
+          <small>Ideal range: < 150 mg/dL</small>
+        </div>
+      </div>
+
+      <!-- CBC Test Input -->
+      <div id="cbcInputs" class="hidden card">
+        <h3>Complete Blood Count (CBC)</h3>
+        <div class="form-group">
+          <label for="wbc">WBC (White Blood Cells, cells/mcL):</label>
+          <input
+            type="number"
+            name="wbc"
+            id="wbc"
+            placeholder="Enter WBC count" required
+          />
+          <small>Ideal range: 4,500 - 11,000 cells/mcL</small>
+        </div>
+        <div class="form-group">
+          <label for="rbc">RBC (Red Blood Cells, million cells/mcL):</label>
+          <input
+            type="number"
+            name="rbc"
+            id="rbc"
+            placeholder="Enter RBC count" required
+          />
+          <small
+            >Ideal range: 4.7 - 6.1 million cells/mcL (Men), 4.2 - 5.4 million
+            cells/mcL (Women)</small
+          >
+        </div>
+        <div class="form-group">
+          <label for="hemoglobin">Hemoglobin (g/dL):</label>
+          <input
+            type="number"
+            name="hemoglobin"
+            id="hemoglobin"
+            placeholder="Enter Hemoglobin level" required
+          />
+          <small
+            >Ideal range: 13.8 - 17.2 g/dL (Men), 12.1 - 15.1 g/dL
+            (Women)</small
+          >
+        </div>
+      </div>
+      <!-- Thyroid Function Test (TFT) Input -->
+      <div id="thyroidFunctionTestInputs" class="hidden card">
+        <h3>Thyroid Function Test (TFT)</h3>
+        <div class="form-group">
+          <label for="tsh">TSH (Thyroid Stimulating Hormone, mIU/L):</label>
+          <input
+            type="number"
+            name="tsh"
+            id="tsh"
+            placeholder="Enter TSH value" required
+          />
+          <small>Ideal range: 0.4 - 4.0 mIU/L</small>
+        </div>
+        <div class="form-group">
+          <label for="t3">T3 (Triiodothyronine, ng/mL):</label>
+          <input type="number" name="t3" id="t3" placeholder="Enter T3 value"  required/>
+          <small>Ideal range: 100 - 200 ng/dL</small>
+        </div>
+        <div class="form-group">
+          <label for="t4">T4 (Thyroxine, μg/dL):</label>
+          <input type="number" name="t4" id="t4" placeholder="Enter T4 value" />
+          <small>Ideal range: 5.0 - 12.0 μg/dL</small>
+        </div>
+      </div>
+
+      <!-- Pregnancy Test Input -->
+      <div id="pregnancyTestInputs" class="hidden card">
+        <h3>Pregnancy Test</h3>
+        <div class="form-group">
+          <label for="hcg">hCG (Human Chorionic Gonadotropin, mIU/mL):</label>
+          <input
+            type="number"
+            name="hcg"
+            id="hcg"
+            placeholder="Enter hCG value" required
+          />
+          <small>Ideal range: 0-5 mIU/mL (Non-pregnant)</small>
+        </div>
+      </div>
+
+      <!-- Prostate-Specific Antigen (PSA) Test Input -->
+      <div id="psaTestInputs" class="hidden card">
+        <h3>Prostate-Specific Antigen (PSA) Test</h3>
+        <div class="form-group">
+          <label for="psa">PSA (ng/mL):</label>
+          <input
+            type="number"
+            name="psa"
+            id="psa"
+            placeholder="Enter PSA value" required
+          />
+          <small>Ideal range: 0 - 4 ng/mL</small>
+        </div>
+      </div>
+
+    <!-- Vitamin D Test Input -->
+<div id="vitaminDTestInputs" class="hidden card">
+    <h3>Vitamin D Test</h3>
+    <div class="form-group">
+      <label for="vitaminD">Vitamin D (ng/mL):</label>
+      <input
+        type="number"
+        name="vitaminD"
+        id="vitaminD"
+        placeholder="Enter Vitamin D value" required
+      />
+      <small>Ideal range: 20 - 50 ng/mL</small>
+    </div>
+  </div>
+  
+
+      <!-- Liver Function Test (LFT) Input -->
+      <div id="lftInputs" class="hidden card">
+        <h3>Liver Function Test (LFT)</h3>
+        <div class="form-group">
+          <label for="alt">ALT (Alanine Aminotransferase, U/L):</label>
+          <input
+            type="number"
+            name="alt"
+            id="alt"
+            placeholder="Enter ALT value" required
+          />
+          <small>Ideal range: 7 - 56 U/L</small>
+        </div>
+        <div class="form-group">
+          <label for="ast">AST (Aspartate Aminotransferase, U/L):</label>
+          <input
+            type="number"
+            name="ast"
+            id="ast"
+            placeholder="Enter AST value" required
+          />
+          <small>Ideal range: 10 - 40 U/L</small>
+        </div>
+        <div class="form-group">
+          <label for="bilirubin">Bilirubin (mg/dL):</label>
+          <input
+            type="number"
+            name="bilirubin"
+            id="bilirubin"
+            placeholder="Enter Bilirubin value" required
+          />
+          <small>Ideal range: 0.1 - 1.2 mg/dL</small>
+        </div>
+      </div>
+
+      <!-- X-ray Test Input -->
+      <div id="xrayInputs" class="hidden card">
+        <h3>X-ray Imaging</h3>
+        <div class="form-group">
+          <label for="xrayModality">Select X-ray Modality:</label>
+          <select name="xrayModality" id="xrayModality" required>
+            <option value="chest">Chest X-ray</option>
+            <option value="abdominal">Abdominal X-ray</option>
+            <option value="spine">Spine X-ray</option>
+            <option value="limbs">Limbs X-ray</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="xrayFile"
+            >Upload X-ray Image (DICOM, PNG, JPG, PDF):</label
+          >
+          <input
+            type="file"
+            name="xrayFile"
+            id="xrayFile"
+            accept=".dcm, .png, .jpg, .jpeg, .pdf" required
+          />
+          <small>Preferred format: DICOM (.dcm) | Max size: 10MB</small>
+        </div>
+        <div class="form-group">
+          <label for="xrayFindings">Radiologist's Findings:</label>
+          <textarea
+            name="xrayFindings"
+            id="xrayFindings"
+            placeholder="Enter findings based on the X-ray" required
+          ></textarea>
+        </div>
+      </div>
+
+      <!-- CT Scan Test Input -->
+      <div id="ctScanInputs" class="hidden card">
+        <h3>CT Scan</h3>
+        <div class="form-group">
+          <label for="ctModality">Select CT Scan Modality:</label>
+          <select name="ctModality" id="ctModality" required>
+            <option value="head">Head CT</option>
+            <option value="abdomen">Abdomen CT</option>
+            <option value="chest">Chest CT</option>
+            <option value="pelvis">Pelvis CT</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="ctFile"
+            >Upload CT Scan Image (DICOM, PNG, JPG, PDF):</label
+          >
+          <input
+            type="file"
+            name="ctFile"
+            id="ctFile"
+            accept=".dcm, .png, .jpg, .jpeg, .pdf" required
+          />
+          <small>Preferred format: DICOM (.dcm) | Max size: 10MB</small>
+        </div>
+        <div class="form-group">
+          <label for="ctFindings">Radiologist's Findings:</label>
+          <textarea
+            name="ctFindings"
+            id="ctFindings"
+            placeholder="Enter findings based on the CT scan" required
+          ></textarea>
+        </div>
+      </div>
+
+      <!-- MRI Test Input -->
+      <div id="mriInputs" class="hidden card">
+        <h3>MRI Scan</h3>
+        <div class="form-group">
+          <label for="mriModality">Select MRI Modality:</label>
+          <select name="mriModality" id="mriModality" required>
+            <option value="brain">Brain MRI</option>
+            <option value="spine">Spine MRI</option>
+            <option value="knee">Knee MRI</option>
+            <option value="abdomen">Abdomen MRI</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="mriFile">Upload MRI Image (DICOM, PNG, JPG, PDF):</label>
+          <input
+            type="file"
+            name="mriFile"
+            id="mriFile"
+            accept=".dcm, .png, .jpg, .jpeg, .pdf" required
+          />
+          <small>Preferred format: DICOM (.dcm) | Max size: 10MB</small>
+        </div>
+        <div class="form-group">
+          <label for="mriFindings">Radiologist's Findings:</label>
+          <textarea
+            name="mriFindings"
+            id="mriFindings"
+            placeholder="Enter findings based on the MRI" required
+          ></textarea>
+        </div>
+      </div>
+
+      <!-- ECG Test Input -->
+      <div id="ecgInputs" class="hidden card">
+        <h3>ECG Test</h3>
+        <div class="form-group">
+          <label for="heartRate">Heart Rate (bpm):</label>
+          <input
+            type="number"
+            name="heartRate"
+            id="heartRate"
+            placeholder="Enter Heart Rate" required
+          />
+          <small>Normal range: 60 - 100 bpm</small>
+        </div>
+        <div class="form-group">
+          <label for="rhythm">Rhythm:</label>
+          <input
+            type="text"
+            name="rhythm"
+            id="rhythm"
+            placeholder="Enter ECG Rhythm" required
+          />
+          <small>Normal: Sinus rhythm</small>
+        </div>
+      </div>
+       <!-- Echocardiogram Test Input -->
+       <div id="echocardiogramInputs" class="hidden card">
+        <h3>Echocardiogram Test</h3>
+        <div class="form-group">
+          <label for="ejectionFraction">Ejection Fraction (%):</label>
+          <input
+            type="number"
+            name="ejectionFraction"
+            id="ejectionFraction"
+            placeholder="Enter Ejection Fraction" required
+          />
+          <small>Normal range: 50% - 70%</small>
+        </div>
+        <div class="form-group">
+          <label for="wallMotion">Wall Motion:</label>
+          <input
+            type="text"
+            name="wallMotion"
+            id="wallMotion"
+            placeholder="Enter Wall Motion" required
+          />
+          <small>Normal: No abnormal wall motion</small>
+        </div>
+      </div>
+
+      <!-- Stress Test Input -->
+      <div id="stressTestInputs" class="hidden card">
+        <h3>Stress Test</h3>
+        <div class="form-group">
+          <label for="maxHeartRate">Max Heart Rate (bpm):</label>
+          <input
+            type="number"
+            name="maxHeartRate"
+            id="maxHeartRate"
+            placeholder="Enter Max Heart Rate" required
+          />
+          <small>Normal range: 85% of predicted max</small>
+        </div>
+        <div class="form-group">
+          <label for="exerciseDuration">Exercise Duration (minutes):</label>
+          <input
+            type="number"
+            name="exerciseDuration"
+            id="exerciseDuration"
+            placeholder="Enter Exercise Duration" required
+          />
+          <small>Normal duration: 6 - 12 minutes</small>
+        </div>
+      </div>
+      <!-- Endoscopy Test Input -->
+      <div id="endoscopyInputs" class="hidden card">
+        <h3>Endoscopy Test</h3>
+        <div class="form-group">
+          <label for="esophagealMucosa">Esophageal Mucosa:</label>
+          <input
+            type="text"
+            name="esophagealMucosa"
+            id="esophagealMucosa"
+            placeholder="Describe Esophageal Mucosa" required
+          />
+          <small>Normal: No inflammation or ulceration</small>
+        </div>
+        <div class="form-group">
+          <label for="gastricMucosa">Gastric Mucosa:</label>
+          <input
+            type="text"
+            name="gastricMucosa"
+            id="gastricMucosa"
+            placeholder="Describe Gastric Mucosa" required
+          />
+          <small>Normal: No signs of bleeding or ulceration</small>
+        </div>
+      </div>
+
+      <!-- Ultrasound Test Input -->
+      <div id="ultrasoundInputs" class="hidden card">
+        <h3>Abdominal Ultrasound Test</h3>
+        <div class="form-group">
+          <label for="liverSize">Liver Size (cm):</label>
+          <input
+            type="number"
+            name="liverSize"
+            id="liverSize"
+            placeholder="Enter Liver Size" required
+          />
+          <small>Normal size: 12 - 15 cm</small>
+        </div>
+        <div class="form-group">
+          <label for="gallbladder">Gallbladder Condition:</label>
+          <input
+            type="text"
+            name="gallbladder"
+            id="gallbladder"
+            placeholder="Describe Gallbladder" required
+          />
+          <small>Normal: No stones or thickening</small>
+        </div>
+      </div>
+      <!-- pH Test Input -->
+      <div id="phInputs" class="hidden card">
+        <h3>pH Test</h3>
+        <div class="form-group">
+          <label for="phValue">pH Value:</label>
+          <input
+            type="number"
+            name="phValue"
+            id="phValue"
+            placeholder="Enter pH Value" required
+          />
+          <small>Ideal range: 4.5 - 7.5</small>
+        </div>
+      </div>
+
+      <!-- Assay Test Input -->
+      <div id="assayInputs" class="hidden card">
+        <h3>Assay Test</h3>
+        <div class="form-group">
+          <label for="assayPercentage">Assay Percentage:</label>
+          <input
+            type="number"
+            name="assayPercentage"
+            id="assayPercentage"
+            placeholder="Enter Assay Percentage" required
+          />
+          <small>Ideal range: 95% - 105%</small>
+        </div>
+      </div>
+
+      <!-- Microbial Limits Test Input -->
+      <div id="microbialLimitsInputs" class="hidden card">
+        <h3>Microbial Limits Test</h3>
+        <div class="form-group">
+          <label for="bacteriaCount">Bacterial Count (cfu/g):</label>
+          <input
+            type="number"
+            name="bacteriaCount"
+            id="bacteriaCount"
+            placeholder="Enter Bacteria Count" required
+          />
+          <small>Normal: Less than 100 cfu/g</small>
+        </div>
+        <div class="form-group">
+          <label for="fungalCount">Fungal Count (cfu/g):</label>
+          <input
+            type="number"
+            name="fungalCount"
+            id="fungalCount"
+            placeholder="Enter Fungal Count" required
+          />
+          <small>Normal: Less than 10 cfu/g</small>
+        </div>
+      </div>
+
+      <!-- Common Fields for all Tests -->
+      <div class="form-group">
+        <label for="testDateTime">Test Date and Time:</label>
+        <input type="datetime-local" name="testDateTime" id="testDateTime" />
+      </div>
+
+      <div class="form-group">
+        <label for="testStatus">Test Status:</label>
+        <select name="testStatus" id="testStatus" required>
+          <option value="final">Final</option>
+          <option value="preliminary">Preliminary</option>
+          <option value="amended">Amended</option>
+        </select>
+      </div>
+
+      <div class="button-container">
+        <button type="button">Submit</button>
+      </div>
+
+      <script>
+        document.getElementById("testType").addEventListener("change", function () {
+        const testType = this.value;
+
+        // Array of input sections to hide
+        const sectionsToHide = [
+            "numericInputs",
+            "codedInputs",
+            "textInputs",
+            "urinalysisInputs",
+            "cholesterolInputs",
+            "cbcInputs",
+            "lftInputs",
+            "thyroidFunctionTestInputs",
+            "pregnancyTestInputs",
+            "psaTestInputs",
+            "vitaminDTestInputs",
+            "xrayInputs",
+            "ctScanInputs",
+            "mriInputs",
+            "ecgInputs",
+            "echocardiogramInputs",
+            "stressTestInputs",
+            "endoscopyInputs",
+            "ultrasoundInputs",
+            "phInputs",
+            "assayInputs",
+            "microbialLimitsInputs",
+        ];
+
+        // Hide all input sections
+        sectionsToHide.forEach((sectionId) => {
+            document.getElementById(sectionId).classList.add("hidden");
+        });
+
+        // Display relevant section based on selected test type
+        const testMapping = {
+            bloodGlucose: "numericInputs",
+            bloodType: "codedInputs",
+            microbiology: "textInputs",
+            urinalysis: "urinalysisInputs",
+            cholesterol: "cholesterolInputs",
+            cbc: "cbcInputs",
+            liverFunctionTest: "lftInputs",
+            thyroidFunctionTest: "thyroidFunctionTestInputs",
+            pregnancyTest: "pregnancyTestInputs",
+            psaTest: "psaTestInputs",
+            vitaminDTest: "vitaminDTestInputs",
+            xray: "xrayInputs",
+            ctScan: "ctScanInputs",
+            mri: "mriInputs",
+            ecg: "ecgInputs",
+            echocardiogram: "echocardiogramInputs",
+            stressTest: "stressTestInputs",
+            endoscopy: "endoscopyInputs",
+            ultrasound: "ultrasoundInputs",
+            ph: "phInputs",
+            assay: "assayInputs",
+            microbialLimits: "microbialLimitsInputs",
+        };
+
+        if (testMapping[testType]) {
+            document.getElementById(testMapping[testType]).classList.remove("hidden");
+        }
+
+        // Scroll back to top when test type is changed
+        window.scrollTo(0, 0);
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+        document
+            .querySelector("button[type='button']")
+            .addEventListener("click", function (event) {
+            event.preventDefault(); // Prevent default form submission
+
+            if (validateForm()) {
+                const fhirObservation = generateFHIRObservation();
+                submitFHIRObservation(fhirObservation);
+            }
+            });
+        });
+
+        function validateForm() {
+        let isValid = true;
+        const requiredFields = document.querySelectorAll("input, select, textarea");
+
+        requiredFields.forEach(function (field) {
+            if (field.offsetParent !== null) {
+            // Check visible fields only
+            if (!field.value.trim()) {
+                isValid = false;
+                field.style.border = "2px solid red"; // Highlight empty fields
+            } else {
+                field.style.border = ""; // Remove border if field is filled
+            }
+            }
+        });
+
+        if (!isValid) {
+            alert("Please fill out all required fields before submitting.");
+        }
+        return isValid;
+        }
+
+        function generateFHIRObservation() {
+        const testTypeElement = document.getElementById("testType");
+        const testType = testTypeElement.value; // Declare the testType here
+        const selectedTest = testTypeElement.selectedOptions[0];
+        const loincCode = selectedTest.dataset.loinc;
+
+        const testValueElement = document.querySelector(
+            ".form-group:not(.hidden) input, .form-group:not(.hidden) textarea, .form-group:not(.hidden) select"
+        );
+        const testValue = testValueElement ? testValueElement.value.trim() : null;
+
+        if (!testValue) {
+            alert("Error: Test value is missing.");
+            return null;
+        }
+
+        let observation = {
+            resourceType: "Observation",
+            status: document.getElementById("testStatus").value,
+            code: {
+            coding: [
+                {
+                system: "http://loinc.org",
+                code: loincCode,
+                display: selectedTest.text,
+                },
+            ],
+            },
+            subject: {
+            reference: document.getElementById("patientReference").value,
+            },
+            effectiveDateTime: document.getElementById("testDateTime").value,
+        };
+
+        // Determine correct value type based on input
+        if (
+            testValueElement.tagName === "SELECT" &&
+            testTypeElement.id !== "testType"
+        ) {
+            // For coded values like Blood Type or Pregnancy Test
+            observation["valueCodeableConcept"] = {
+            coding: [
+                {
+                system: "http://snomed.info/sct",
+                code: testValue,
+                display: testValue,
+                },
+            ],
+            };
+        } else if (!isNaN(testValue)) {
+            // For numeric values, set appropriate unit based on test type
+            let unit, code;
+            switch (testType) {
+            case "bloodGlucose":
+            case "cholesterol":
+                unit = "mg/dL";
+                code = "mg/dL";
+                break;
+            case "urinalysis":
+                unit = "pH";
+                code = "pH";
+                break;
+            case "cbc":
+                unit = "cells/mcL";
+                code = "10*3/uL"; // Example: CBC unit
+                break;
+            case "liverFunctionTest":
+                unit = "U/L";
+                code = "U/L";
+                break;
+            case "vitaminDTest":
+                unit = "ng/mL";
+                code = "ng/mL";
+                break;
+            case "psaTest":
+                unit = "ng/mL";
+                code = "ng/mL";
+                break;
+            default:
+                unit = "units"; // Default unit if none specified
+                code = "units";
+                break;
+            }
+
+            observation["valueQuantity"] = {
+            value: parseFloat(testValue),
+            unit: unit,
+            system: "http://unitsofmeasure.org",
+            code: code,
+            };
+        } else {
+            // For free-text values like Microbiology results or other text-based results
+            observation["valueString"] = testValue;
+        }
+
+        // Log the JSON format of the observation to the console
+        console.log("Generated FHIR Observation:", observation);
+
+        return observation;
+        }
+
+        function submitFHIRObservation(observation) {
+        if (!observation) {
+            alert("Error: Observation is not valid.");
+            return;
+        }
+
+        fetch("https://hapi.fhir.org/baseR4/Observation", {
+            method: "POST",
+            headers: {
+            "Content-Type": "application/fhir+json",
+            },
+            body: JSON.stringify(observation),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+            console.log("FHIR Server Response:", data); // Log server response
+            alert(
+                "Observation successfully submitted! FHIR ID: " + (data.id || "Unknown")
+            );
+            })
+            .catch((error) => {
+            console.error("FHIR Submission Error:", error);
+            alert("Failed to submit observation.");
+            });
+        }
+
+        function updateTestType() {
+        const category = document.getElementById("category").value;
+        const testTypeSelect = document.getElementById("testType");
+        testTypeSelect.innerHTML = ""; // Clear existing options
+
+        // Default "Select One" option
+        const option = document.createElement("option");
+        option.value = "";
+        option.disabled = true;
+        option.selected = true;
+        option.textContent = "Select One";
+        testTypeSelect.appendChild(option);
+
+        // Define tests with LOINC codes
+        const tests = {
+            laboratory: [
+            { value: "bloodGlucose", text: "Blood Glucose", loinc: "2339-0" },
+            { value: "bloodType", text: "Blood Type", loinc: "882-1" },
+            { value: "microbiology", text: "Microbiology Culture", loinc: "600-7" },
+            { value: "urinalysis", text: "Urinalysis", loinc: "58037-8" },
+            { value: "cholesterol", text: "Cholesterol", loinc: "2093-3" },
+            { value: "cbc", text: "Complete Blood Count (CBC)", loinc: "57021-8" },
+            {
+                value: "liverFunctionTest",
+                text: "Liver Function Test",
+                loinc: "24325-3",
+            },
+            {
+                value: "thyroidFunctionTest",
+                text: "Thyroid Function Test",
+                loinc: "3016-3",
+            },
+            ],
+            imaging: [
+            { value: "xray", text: "X-ray", loinc: "18782-3" },
+            { value: "ctScan", text: "CT Scan", loinc: "24627-2" },
+            { value: "mri", text: "MRI", loinc: "58752-2" },
+            ],
+            pathology: [
+            { value: "pregnancyTest", text: "Pregnancy Test", loinc: "2106-3" },
+            { value: "psaTest", text: "PSA Test", loinc: "2857-1" },
+            { value: "vitaminDTest", text: "Vitamin D Test", loinc: "1975-2" },
+            ],
+            cardiology: [
+            { value: "ecg", text: "ECG (Electrocardiogram)", loinc: "34152-5" },
+            { value: "echocardiogram", text: "Echocardiogram", loinc: "18035-3" },
+            { value: "stressTest", text: "Stress Test", loinc: "89575-0" },
+            ],
+            gastroenterology: [
+            { value: "endoscopy", text: "Endoscopy", loinc: "39132-5" },
+            { value: "ultrasound", text: "Abdominal Ultrasound", loinc: "30743-6" },
+            ],
+            productQuality: [
+            { value: "ph", text: "pH Test", loinc: "2748-2" },
+            { value: "assay", text: "Assay Test", loinc: "19124-8" },
+            { value: "microbialLimits", text: "Microbial Limits", loinc: "632-0" },
+            ],
+        };
+
+        // Populate testType dropdown with available tests
+        if (tests[category]) {
+            tests[category].forEach(function (test) {
+            const testOption = document.createElement("option");
+            testOption.value = test.value;
+            testOption.textContent = test.text;
+            testOption.setAttribute("data-loinc", test.loinc); // Assign LOINC code
+            testTypeSelect.appendChild(testOption);
+            });
+        }
+        }
+
+      </script>
+  </body>
+</html>
