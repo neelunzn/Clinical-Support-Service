@@ -105,9 +105,8 @@ input[type="text"]:focus {
 .sidebar-img img {
     width: 90px; 
     height: 90px;
-    padding-left: 70px;
-    padding-top: 20px; 
-    border-radius: 30%;
+    margin-left: 30%;
+    border-radius: 50%;
     object-fit: cover; 
 }
 
@@ -192,7 +191,7 @@ input[type="text"]:focus {
 }
 
 .card {
-    background-color: #cfe1f5;
+    background-color:  #e0f0ff;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
@@ -284,7 +283,7 @@ input[type="text"]:focus {
 
 .appointment-card {
     width: 50%;
-    background-color: #cfe1f5;
+    background-color: #ffffff;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     padding: 20px;
@@ -309,7 +308,7 @@ h3 {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: #ceddee;
+    background-color:  #e0f0ff;
     border-radius: 8px;
     padding: 10px;
     padding-top: 10px;
@@ -537,7 +536,7 @@ h3 {
 
 /* Patients Review */ 
 .review-card {
-    background-color: #cfe1f5;
+    background-color:  #e0f0ff;
     border-radius: 8px;
     padding: 20px;
     width: 470px;
@@ -598,7 +597,7 @@ h3 {
 
 /* Appointment Request */
 .request-card {
-    background-color: #cfe1f5;
+    background-color:  #e0f0ff;
     border-radius: 8px;
     padding: 20px;
     margin-left: 20px;

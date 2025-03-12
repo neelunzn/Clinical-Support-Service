@@ -14,7 +14,11 @@
         <div class="container">
             <div class="sidebar">
                 <div class="sidebar-img">
-                    <img src="{% static 'images/doctor_profile.svg'%}" alt="Doctor">
+                    {% if fhir_data.photo and fhir_data.photo.0.data %}
+                        <img src="data:{{ fhir_data.photo.0.contentType }};base64,{{ fhir_data.photo.0.data }}" alt="Profile Picture" id="profilePreview">
+                    {% else %}
+                        <img src="{% static 'images/default_profile.png' %}" alt="Profile Picture" id="profilePreview">
+                    {% endif %}
                 </div>
                 <h2>{{fhir_data.name.0.given.0}} {{fhir_data.name.0.family}}</h2>
                 <div class="sidebar-text">
@@ -24,7 +28,9 @@
                     <ul>
                         <li><img src="{% static 'images/dashboard-icon.svg'%}" alt="Dashboard Icon"> Dashboard</li>
                         <li ><img src="{% static 'images/appointment-icon.svg'%}" alt="Appointment Icon"> Appointment Page</li>
-                        <li><img src="{% static 'images/profile-icon.svg'%}" alt="Profile Icon"> Profile</li>
+                        <a href="{% url 'Hapi:doctor_profile'%}" style="text-decoration: none; color: black;">
+                            <li><img src="{% static 'images/profile-icon.svg'%}" alt="Profile Icon"> Profile</li>
+                        </a>
                         <li><img src="{% static 'images/settings-icon.svg'%}" alt="Settings Icon"> Settings</li>
                         <a href="{% url 'Hapi:logout'%}" style="text-decoration: none; color: black;">
                             <li><img src="{% static 'images/logout-icon.svg'%}" alt="Logout Icon">Logout</li>

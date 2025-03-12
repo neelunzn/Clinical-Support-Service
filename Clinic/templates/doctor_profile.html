@@ -1,81 +1,310 @@
-{% extends 'base.html' %}
 {% load static %}
-{% block title %}Doctor Profile{% endblock %}
-
-{% block extra_head %}
-    <link rel="stylesheet" href="{% static 'css/doctor_profile.css' %}">
-{% endblock %}
-
-{% block content %}
-<div class="profile-container">
-    <h1>Doctor Profile</h1>
-
-    <form method="POST">
-        {% csrf_token %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Doctor Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/doctor_profile.css' %}" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif+Khojki&display=swap"
+    />
+  </head>
+  <body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="sidebar-img">
+                {% if fhir_data.photo and fhir_data.photo.0.data %}
+                    <img src="data:{{ fhir_data.photo.0.contentType }};base64,{{ fhir_data.photo.0.data }}" alt="Profile Picture" id="profilePreview">
+                {% else %}
+                    <img src="{% static 'images/default_profile.png' %}" alt="Profile Picture" id="profilePreview">
+                {% endif %}
+            </div>
+            <h2>{{fhir_data.name.0.given.0}} {{fhir_data.name.0.family}}</h2>
+            <div class="sidebar-text">
+                <p>MBBS, FCPS - MD (Medicine), MCPS</p>
+            </div>
+            <div class="sidebar-items">
+                <ul>
+                    <a href="{% url 'Hapi:dashboard'%}" style="text-decoration: none; color: black;">
+                        <li><img src="{% static 'images/dashboard-icon.svg'%}" alt="Dashboard Icon"> Dashboard</li>
+                    </a>
+                    <li ><img src="{% static 'images/appointment-icon.svg'%}" alt="Appointment Icon"> Appointment Page</li>
+                    <a href="{% url 'Hapi:doctor_profile'%}" style="text-decoration: none; color: black;">
+                        <li><img src="{% static 'images/profile-icon.svg'%}" alt="Profile Icon"> Profile</li>
+                    </a>
+                    <li><img src="{% static 'images/settings-icon.svg'%}" alt="Settings Icon"> Settings</li>
+                    <a href="{% url 'Hapi:logout'%}" style="text-decoration: none; color: black;">
+                        <li><img src="{% static 'images/logout-icon.svg'%}" alt="Logout Icon">Logout</li>
+                    </a>
+                </ul>
+            </div>
+        </div>
+      <div class="content">
+        <div class="header">
+          <div class="dashboard-display">
+            <div class="search-container">
+              <input type="text" placeholder="Search Doctor" />
+            </div>
+            <div class="icons">
+              <div class="icon-link">
+                <img src="{% static 'images/email-icon.svg' %}" alt="Email Icon" />
+              </div>
+              <div class="icon-link">
+                <img src="{% static 'images/notification-icon.svg' %}" alt="Notification Icon" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-container">
+            <form id="profileForm" method="POST" action="{% url 'Hapi:doctor_profile' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <h4>Basic Information</h4>
+                <div class="profile-upload">
+                    <div class="profile-image">
+                        {% if fhir_data.photo and fhir_data.photo.0.data %}
+                            <img src="data:{{ fhir_data.photo.0.contentType }};base64,{{ fhir_data.photo.0.data }}" alt="Profile Picture" id="profilePreview">
+                        {% else %}
+                            <img src="{% static 'images/default_profile.png' %}" alt="Profile Picture" id="profilePreview">
+                        {% endif %}
+                    </div>
+                    <div class="upload-content">
+                        <label for="profileUpload" class="upload-btn">
+                            📷 Upload Photo
+                        </label>
+                        <input type="file" id="profileUpload" name="profile_picture" accept="image/*" hidden>
+                        <p class="upload-info">Allowed JPG, GIF, or PNG. Max size of 2MB</p>
+                    </div>
+                </div>
+                
+                <br><br>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="firstName">First Name</label>
+                        <input type="text" id="firstName" name="firstName" placeholder="First Name" value="{{fhir_data.name.0.given.0}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Last Name</label>
+                        <input type="text" id="lastName" name="lastName" placeholder="Last Name" value="{{fhir_data.name.0.family}}">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="Email" value="{{user.email}}" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="text" id="phone" name="phone" placeholder="Phone Number" value="{{fhir_data.telecom.0.value}}">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="gender">Gender</label>
+                        <select id="gender" name="gender">
+                            <option value="">Select</option>
+                            <option value="male" {% if fhir_data.gender == 'male' %}selected{% endif %}>Male</option>
+                            <option value="female" {% if fhir_data.gender == 'female' %}selected{% endif %}>Female</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="dob">Date of Birth</label>
+                        <input type="date" id="dob" name="dob" value="{{fhir_data.birthDate}}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="bio">Biography</label>
+                    <textarea id="bio" name="bio" rows="3" placeholder="Tell something about yourself">{{fhir_data.text}}</textarea>
+                </div>
         
-        <label for="active">Active</label>
-        <input type="checkbox" name="active" {% if role_data.active %}checked{% endif %}>
+                <hr>
+        
+                <h4>Clinic Info</h4>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="clinicName">Clinic Name</label>
+                        <input type="text" id="clinicName" name="clinicName" placeholder="Clinic Name" value="{{practitioner_role.organization.display}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="clinicAddress">Clinic Address</label>
+                        <input type="text" id="clinicAddress" name="clinicAddress" placeholder="Clinic Address" value="{{practitioner_role.location.0.display}}">
+                    </div>
+                </div>
+        
+                <hr>
+        
+                <h4>Contact Details</h4>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="address1">Address Line 1</label>
+                        <input type="text" id="address1" name="address1" placeholder="Address Line 1" value="{{fhir_data.address.0.line.0}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="address2">Address Line 2</label>
+                        <input type="text" id="address2" name="address2" placeholder="Address Line 2" value="{{fhir_data.address.0.line.1}}">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="city">City</label>
+                        <input type="text" id="city" name="city" placeholder="City" value="{{fhir_data.address.0.city}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="state">State / Province</label>
+                        <input type="text" id="state" name="state" placeholder="State / Province" value="{{fhir_data.address.0.state}}">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="country">Country</label>
+                        <input type="text" id="country" name="country" placeholder="Country" value="{{fhir_data.address.0.country}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="postalCode">Postal Code</label>
+                        <input type="text" id="postalCode" name="postalCode" placeholder="Postal Code" value="{{fhir_data.address.0.postalCode}}">
+                    </div>
+                </div>
+        
+                <hr>
+        
+                <h4>Specialization</h4>
+                <div id="specialization-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <input type="text" name="specialization[]" placeholder="Enter Specialization">
+                    </div>
+                </div>
+                </div>
+                <div class="form-row">
+                    <button type="button" class="add-more" data-section="specialization-section">+ Add More</button>
+                </div>
 
-        <label for="organization">Organization</label>
-        <input type="text" name="organization" value="{{ role_data.organization.display|default:'' }}" required>
+                <hr />
 
-        <label for="role_code">Role Code</label>
-        <div class="form-group">
-            <!-- Role code with autocomplete suggestions -->
-            <input list="role_codes" id="role_code" name="role_code" class="form-control" placeholder="Select or type your role">
-            <datalist id="role_codes">
-                <option value="Physician">
-                <option value="Surgeon">
-                <option value="General Practitioner">
-                <option value="Referring Practitioner">
-                <option value="Nurse">
-                <option value="Pharmacist">
-                <!-- Add more roles here -->
-            </datalist>
+                <h4>Education</h4>
+                <div id="education-section">
+                    {% for qualification in fhir_data.qualification %}
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="degree">Degree</label>
+                                <input type="text" name="degree[]" placeholder="Degree" value="{{ qualification.code.text }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="college">College/Institute</label>
+                                <input type="text" name="college[]" placeholder="College/Institute" value="{{ qualification.issuer.display }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="yearOfCompletion">Year of Completion</label>
+                                <input type="number" name="yearOfCompletion[]" placeholder="Year of Completion" value="{{ qualification.period.end }}">
+                            </div>
+                        </div>
+                    {% endfor %}
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="degree">Degree</label>
+                            <input type="text" name="degree[]" placeholder="Degree">
+                        </div>
+                        <div class="form-group">
+                            <label for="college">College/Institute</label>
+                            <input type="text" name="college[]" placeholder="College/Institute">
+                        </div>
+                        <div class="form-group">
+                            <label for="yearOfCompletion">Year of Completion</label>
+                            <input type="number" name="yearOfCompletion[]" placeholder="Year of Completion">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <button type="button" class="add-more" data-section="education-section">+ Add More</button>
+                </div>
+
+                <hr />
+
+                <h4>Experience</h4>
+                <div id="experience-section">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="hospital">Hospital Name</label>
+                        <input type="text" name="hospital[]" placeholder="Hospital Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="designation">Designation</label>
+                        <input type="text" name="designation[]" placeholder="Designation">
+                    </div>
+                    <div class="form-group">
+                        <label for="expFrom">From</label>
+                        <input type="date" name="expFrom[]">
+                    </div>
+                    <div class="form-group">
+                        <label for="expTo">To</label>
+                        <input type="date" name="expTo[]">
+                    </div>
+                </div>
+                </div>
+                <div class="form-row">
+                    <button type="button" class="add-more" data-section="experience-section">+ Add More</button>
+                </div>
+
+                <div id="experience-section">
+                {% for experience in practitioner_role.extension %}
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="hospital">Hospital Name</label>
+                        <input type="text" name="hospital[]" placeholder="Hospital Name" value="{{ experience.valueString }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="designation">Designation</label>
+                        <input type="text" name="designation[]" placeholder="Designation" value="{{ experience.valueString }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="expFrom">From</label>
+                        <input type="date" name="expFrom[]" value="{{ experience.period.start }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="expTo">To</label>
+                        <input type="date" name="expTo[]" value="{{ experience.period.end }}">
+                    </div>
+                </div>
+                {% endfor %}
+                </div>
+        
+                <hr>
+                <button type="submit" class="save-button">Save Changes</button>
+            </form>
         </div>
-        <label for="specialty">Specialty</label>
-        <div id="specialty-container">
-            {% for spec in role_data.specialty %}
-                <input type="text" name="specialty" value="{{ spec.text }}">
-            {% endfor %}
-        </div>
-        <button type="button" onclick="addField('specialty-container', 'specialty')">+ Add More</button>
+    </div>
+    <script>
+        // JavaScript to handle "Add More" button
+        document.querySelectorAll('.add-more').forEach(button => {
+          button.addEventListener('click', function () {
+            const sectionId = this.getAttribute('data-section');
+            const section = document.getElementById(sectionId);
+  
+            // Clone the first row in the section
+            const newRow = section.children[0].cloneNode(true);
+  
+            // Clear input values in the new row
+            newRow.querySelectorAll('input').forEach(input => {
+              input.value = '';
+            });
+  
+            // Append the new row to the section
+            section.appendChild(newRow);
+          });
+        });
 
-        <label for="location">Location</label>
-        <div id="location-container">
-            {% for loc in role_data.location %}
-                <input type="text" name="location" value="{{ loc.display }}">
-            {% endfor %}
-        </div>
-        <button type="button" onclick="addField('location-container', 'location')">+ Add More</button>
-
-        <label for="phone">Phone</label>
-        <input type="text" name="phone" value="{{ role_data.contact.0.telecom.0.value|default:'' }}">
-
-        <label for="email">Email</label>
-        <input type="email" name="email" value="{{ role_data.contact.0.telecom.1.value|default:'' }}">
-
-        <label for="available_days">Available Days</label>
-        <input type="text" name="available_days" value="{{ role_data.availability.availableTime.0.daysOfWeek|join:', ' }}">
-
-        <label for="available_start">Start Time</label>
-        <input type="time" name="available_start" value="{{ role_data.availability.availableTime.0.availableStartTime }}">
-
-        <label for="available_end">End Time</label>
-        <input type="time" name="available_end" value="{{ role_data.availability.availableTime.0.availableEndTime }}">
-
-        <button id="save" type="submit" class="btn btn-save">Save Changes</button>
-    </form>
-</div>
-
-<script>
-    function addField(containerId, name) {
-        var container = document.getElementById(containerId);
-        var input = document.createElement("input");
-        input.type = "text";
-        input.name = name;
-        container.appendChild(input);
-    }
-
-</script>
-{% endblock %}
+        // JavaScript to preview the uploaded image
+        document.getElementById('profileUpload').addEventListener('change', function (event) {
+            const file = event.target.files[0];
+            if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                document.getElementById('profilePreview').src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+            }
+        });
+      </script>
+  </body>
+</html>

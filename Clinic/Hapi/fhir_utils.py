@@ -69,13 +69,14 @@ def create_patient_in_fhir(patient_info):
 def get_fhir_data(fhir_id, role):
     # Construct the URL for the FHIR resource (e.g., Practitioner or Patient)
     url = f"{FHIR_SERVER_URL}Patient/{fhir_id}"  # Adjust resource type as needed (Practitioner or Patient)
-    if role == 'doctor':
+    if role == "doctor":
         url = f"{FHIR_SERVER_URL}Practitioner/{fhir_id}"  # Adjust resource type as needed (Practitioner or Patient)
     
     # Send a GET request to the FHIR server
     response = requests.get(url)
     
     # Check if the request was successful
+    print(response.status_code)
     if response.status_code == 200:
         return response.json()  # Return the JSON data
     else:

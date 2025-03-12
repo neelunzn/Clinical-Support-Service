@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, JsonResponse
 from django.contrib import messages
 from datetime import datetime, timedelta
+import base64
 
 FHIR_SERVER_URL = 'http://localhost:8080/fhir/'
 
@@ -19,7 +20,7 @@ def landing_page(request):
 def register(request, role):
     if request.method == 'POST':
         user_form = UserRegistrationForm(request.POST)
-        print(user_form.is_valid(), "User")
+        print(user_form.errors, "User Form")
         if user_form.is_valid():
             user = user_form.save(commit=False)
             user.role = role  # Assign role before saving
@@ -29,7 +30,7 @@ def register(request, role):
             # Handle Doctor registration
             if role == 'doctor':
                 doctor_form = DoctorRegistrationForm(request.POST)
-                print(doctor_form.is_valid(), "doctror")
+                print(doctor_form.errors, "doctror")
                 if doctor_form.is_valid():
                     doctor = doctor_form.cleaned_data  # Extract cleaned data
                     fhir_id = create_practitioner_in_fhir(doctor)  # Pass dict, handle in function
@@ -44,7 +45,7 @@ def register(request, role):
             # Handle Patient registration
             elif role == 'patient':
                 patient_form = PatientRegistrationForm(request.POST)
-                print(patient_form.is_valid(), "patient")
+                print(patient_form.errors, "patient")
                 if patient_form.is_valid():
                     patient = patient_form.cleaned_data  # Extract cleaned data
                     fhir_id = create_patient_in_fhir(patient)  # Pass dict, handle in function
@@ -114,7 +115,6 @@ def user_dashboard(request):
     fhir_id = user.fhir_id  
     
     fhir_data = get_fhir_data(fhir_id, user.role)
-
     if fhir_data:
         if user.role == 'doctor':
             # Fetch Pending Appointments
@@ -128,9 +128,152 @@ def user_dashboard(request):
             print(appointments)
             return render(request, 'doctor_dashboard.html', {'fhir_data': fhir_data, 'pending_appointments': appointments})
         else:
-            return render(request, 'patient_dashboard.html', {'fhir_data': fhir_data})
+            return render(request, 'patient_dashboard.html', {'fhir_data': fhir_data, 'user':user})
     else:
         return render(request, 'dashboard.html', {'error': 'No FHIR data found.'})
+
+@login_required
+def doctor_profile(request):
+    user = request.user
+    fhir_id = user.fhir_id
+    fhir_data = get_fhir_data(fhir_id, user.role)
+    if request.method == 'POST':
+        # Extract data from the form
+        data = request.POST
+
+        files = request.FILES
+        profile_picture = files.get('profile_picture')
+        photo_data = None
+        if profile_picture:
+            photo_data = base64.b64encode(profile_picture.read()).decode('utf-8')
+        else:
+            if 'photo' in fhir_data and fhir_data['photo']:
+                photo_data = fhir_data['photo'][0]['data']
+        # Handle multiple specializations
+        specializations = data.getlist('specialization[]')
+
+        # Handle multiple education entries
+        degrees = data.getlist('degree[]')
+        colleges = data.getlist('college[]')
+        years_of_completion = data.getlist('yearOfCompletion[]')
+
+        # Handle multiple experience entries
+        hospitals = data.getlist('hospital[]')
+        designations = data.getlist('designation[]')
+        exp_from = data.getlist('expFrom[]')
+        exp_to = data.getlist('expTo[]')
+
+        # Prepare the updated Practitioner resource
+        updated_practitioner = {
+            "resourceType": "Practitioner",
+            "id": fhir_id,  # Use the stored FHIR ID
+            "name": [{
+                "use": "official",
+                "family": data.get('lastName', ''),
+                "given": [data.get('firstName', '')],
+            }],
+            "gender": data.get('gender', ''),
+            "birthDate": data.get('dob', ''),
+            "telecom": [{"system": "phone", "value": data.get('phone', '')}],
+            "address": [{
+                "line": [data.get('address1', ''), data.get('address2', '')],
+                "city": data.get('city', ''),
+                "state": data.get('state', ''),
+                "postalCode": data.get('postalCode', ''),
+                "country": data.get('country', '')
+            }],
+            "qualification": [
+                {
+                    "code": {"text": degrees[i]},
+                    "issuer": {"display": colleges[i]},
+                    "period": {"end": years_of_completion[i]}
+                }
+                for i in range(len(degrees))  # Loop through all education entries
+            ],
+            "photo": [{
+                "contentType": profile_picture.content_type if profile_picture else fhir_data['photo'][0]['contentType'],
+                "data": photo_data,
+                "title": "Profile Picture"
+            }] if profile_picture else None
+        }
+
+        # Send the updated Practitioner resource to the HAPI FHIR server
+        hapi_fhir_url = f"{FHIR_SERVER_URL}Practitioner/{fhir_id}"
+        response = requests.put(hapi_fhir_url, json=updated_practitioner)
+        if response.status_code != 200:
+            # Handle errors (e.g., display an error message)
+            return render(request, 'doctor_profile.html', {
+                'error': 'Failed to update Practitioner profile',
+                "fhir_data": fhir_data,
+                "user": user
+            })
+
+        # Fetch the PractitionerRole resource using the Practitioner FHIR ID
+        practitioner_role_url = f"{FHIR_SERVER_URL}PractitionerRole?practitioner={fhir_id}"
+        practitioner_role_response = requests.get(practitioner_role_url)
+        if practitioner_role_response.status_code == 200:
+            practitioner_role_data = practitioner_role_response.json()
+            if practitioner_role_data.get('total', 0) > 0:
+                # Assuming the first role is the one to update
+                practitioner_role = practitioner_role_data['entry'][0]['resource']
+                practitioner_role_id = practitioner_role['id']
+            else:
+                # If no PractitionerRole exists, create a new one
+                practitioner_role_id = None
+        else:
+            return render(request, 'doctor_profile.html', {
+                'error': 'Failed to fetch PractitionerRole',
+                "fhir_data": fhir_data,
+                "user": user
+            })
+
+        # Prepare the updated PractitionerRole resource
+        updated_practitioner_role = {
+            "resourceType": "PractitionerRole",
+            "practitioner": {"reference": f"{FHIR_SERVER_URL}Practitioner/{fhir_id}"},
+            "organization": {"display": data.get('clinicName', '')},
+            "location": [{"display": data.get('clinicAddress', '')}],
+            "specialty": [{"text": spec} for spec in specializations],  # Add all specializations
+            "extension": [
+                {
+                    "url": "http://example.org/StructureDefinition/experience",
+                    "valueString": hospitals[i],
+                    "period": {
+                        "start": exp_from[i],
+                        "end": exp_to[i]
+                    }
+                }
+                for i in range(len(hospitals))  # Loop through all experience entries
+            ]
+        }
+
+        # Update or create the PractitionerRole resource
+        if practitioner_role_id:
+            # Update existing PractitionerRole
+            updated_practitioner_role["id"] = practitioner_role_id
+            practitioner_role_url = f"{FHIR_SERVER_URL}PractitionerRole/{practitioner_role_id}"
+            role_response = requests.put(practitioner_role_url, json=updated_practitioner_role)
+        else:
+            # Create new PractitionerRole
+            practitioner_role_url = f"{FHIR_SERVER_URL}PractitionerRole"
+            role_response = requests.post(practitioner_role_url, json=updated_practitioner_role)
+
+        if role_response.status_code in [200, 201]:
+            # Redirect to the dashboard with a success message
+            return redirect('Hapi:dashboard')
+        else:
+            # Handle errors (e.g., display an error message)
+            return render(request, 'doctor_profile.html', {
+                'error': 'Failed to update PractitionerRole',
+                "fhir_data": fhir_data,
+                "user": user
+            })
+
+    # Render the profile page with FHIR data
+    return render(request, 'doctor_profile.html', {
+        "fhir_data": fhir_data,
+        "user": user
+    })
 
 @login_required
 def doctor_list(request):
@@ -200,70 +343,6 @@ def pending_appointments(request):
         appointments = []
 
     return render(request, "pending_appointments.html", {"appointments": appointments, "doctor_id": user.fhir_id})
-    
-def doctor_profile(request):
-    if not request.user.is_authenticated:
-        return redirect('Hapi:login')
-    
-    if request.user.role == 'patient':
-        logout(request)
-        return redirect('Hapi:login')
-    
-    user = request.user
-
-    # Fetch existing PractitionerRole
-    response = requests.get(f"{FHIR_SERVER_URL}/PractitionerRole?practitioner=Practitioner/{user.fhir_id}")
-    
-    role_data = {}
-    if response.status_code == 200 and "entry" in response.json():
-        role_data = response.json()["entry"][0]["resource"]
-    print(role_data, user.fhir_id, user.role)
-    if request.method == "POST":
-        # Collect form data
-        new_active = request.POST.get("active") == "on"
-        new_organization = request.POST.get("organization")
-        new_role_code = request.POST.get("role_code")
-        new_specialties = request.POST.getlist("specialty")
-        new_locations = request.POST.getlist("location")
-        new_services = request.POST.getlist("healthcareService")
-        new_phone = request.POST.get("phone")
-        new_email = request.POST.get("email")
-        new_available_days = request.POST.getlist("available_days")
-        new_available_start = request.POST.get("available_start")
-        new_available_end = request.POST.get("available_end")
-
-        # Prepare the PractitionerRole resource
-        practitioner_role = {
-            "resourceType": "PractitionerRole",
-            "practitioner": {"reference": f"Practitioner/{user.fhir_id}"},
-            "active": new_active,
-            "organization": {"display": new_organization},
-            "code": [{"coding": [{"system": "http://terminology.hl7.org/CodeSystem/v2-0286", "code": new_role_code}]}],
-            "specialty": [{"text": spec} for spec in new_specialties],
-            "location": [{"display": loc} for loc in new_locations],
-            "healthcareService": [{"display": service} for service in new_services],
-            "contact": [{"telecom": [{"system": "phone", "value": new_phone, "use": "work"}, {"system": "email", "value": new_email, "use": "work"}]}],
-            "availability": {
-                "availableTime": [{
-                    "daysOfWeek": new_available_days,
-                    "availableStartTime": new_available_start,
-                    "availableEndTime": new_available_end
-                }]
-            },
-        }
-
-        # If PractitionerRole exists, update it
-        if role_data:
-            role_id = role_data["id"]
-            requests.put(f"{FHIR_SERVER_URL}/PractitionerRole/{role_id}", json=practitioner_role)
-        else:
-            res = requests.post(f"{FHIR_SERVER_URL}/PractitionerRole", json=practitioner_role)
-            print(res.status_code, practitioner_role)
-        return redirect("Hapi:doctor_profile")
-    return render(request, "doctor_profile.html", {"role_data": role_data})
-
-
-
 
 @login_required
 def update_appointment_status(request, appointment_id, action):
