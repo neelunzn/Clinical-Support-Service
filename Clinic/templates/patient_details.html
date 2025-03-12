@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>CareDoc</title>
+	<link rel="stylesheet" href="patient_details.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+	<!-- Sidebar -->
+	<div class="sidebar">
+		<div class="logo">
+			<i class="fas fa-stethoscope" style="color: #007bff;"></i>
+			<div class="logo-text">CareDoc</div>
+		</div>
+		<div class="sidebar-category">OVERVIEW</div>
+		<div class="sidebar-menu">
+			<a href="#" class="menu-item">
+				<i class="fas fa-th-large"></i> Dashboard </a>
+			<a href="#" class="menu-item">
+				<i class="far fa-calendar-alt"></i> Appointments </a>
+			<a href="#" class="menu-item active">
+				<i class="fas fa-user-injured"></i> Patients </a>
+			<a href="#" class="menu-item">
+				<i class="far fa-comment-alt"></i> Messages </a>
+			<a href="#" class="menu-item">
+				<i class="far fa-file-alt"></i> Reports </a>
+			<a href="#" class="menu-item">
+				<i class="fas fa-cog"></i> Settings </a>
+		</div>
+		<div class="sidebar-category" style="margin-top: 20px;">FINANCE</div>
+		<div class="sidebar-menu">
+			<a href="#" class="menu-item">
+				<i class="fas fa-th-large"></i> Dashboard </a>
+			<a href="#" class="menu-item">
+				<i class="fas fa-credit-card"></i> Payment History </a>
+			<a href="#" class="menu-item">
+				<i class="far fa-file-alt"></i> Reports </a>
+		</div>
+	</div>
+	<!-- Main Content -->
+	<div class="main-content">
+		<!-- Header -->
+		<div class="header">
+			<div class="header-left">Patients</div>
+			<div class="header-right">
+				<div class="bell-icon">
+					<i class="far fa-bell"></i>
+				</div>
+				<div class="user-profile">
+					<div class="user-avatar">
+						<img src="/api/placeholder/32/32" alt="User Profile">
+					</div>
+					<div class="username">Charlie Teo</div>
+					<i class="fas fa-chevron-down" style="font-size: 12px; color: #888;"></i>
+				</div>
+			</div>
+		</div>
+		<!-- Breadcrumb -->
+		<div class="breadcrumb">
+			<a href="#">Patients List</a>
+			<span>/</span>
+			<a href="#" style="color: #333;">Patient Details</a>
+		</div>
+		<!-- Patient Profile -->
+		<div class="patient-profile">
+			<!-- Profile Header -->
+			<div class="profile-header">
+				<div class="patient-avatar">
+					<img src="/api/placeholder/60/60" alt="Patient Avatar">
+				</div>
+				<div class="patient-basic-info">
+					<div class="patient-name"> Henry D. Wilson <span class="status-badge">Active</span>
+					</div>
+					<div style="display: flex; align-items: center;">
+						<div class="patient-id">ID: #2533</div>
+						<div class="patient-phone">
+							<i class="fas fa-phone-alt"></i> +123 456 7890 </div>
+					</div>
+				</div>
+				<div class="settings-icon" style="color: #888;">
+					<i class="fas fa-ellipsis-h"></i>
+				</div>
+			</div>
+			<!-- Profile Tabs -->
+			<div class="profile-tabs">
+				<div class="tab active" data-tab="details">
+					<i class="fas fa-info-circle"></i> Details </div>
+				<div class="tab" data-tab="lab-report">
+					<i class="fas fa-flask"></i> Lab Report </div>
+				<div class="tab" data-tab="medication">
+					<i class="fas fa-pills"></i> Medication </div>
+				<div class="tab" data-tab="chat">
+					<i class="far fa-comment-alt"></i> Chat </div>
+			</div>
+			<!-- Profile Content Sections -->
+			<div class="profile-content">
+				<!-- Details Tab -->
+				<div class="tab-content active" id="details">
+					<div class="section-title">Personal Information</div>
+					<div class="info-grid">
+						<div class="info-item">
+							<div class="info-label">First Name</div>
+							<div class="info-value">Henry</div>
+						</div>
+						<div class="info-item">
+							<div class="info-label">Last Name</div>
+							<div class="info-value">Wilson</div>
+						</div>
+						<div class="info-item">
+							<div class="info-label">Father Name</div>
+							<div class="info-value">Darrel Wilson</div>
+						</div>
+						<div class="info-item">
+							<div class="info-label">Age</div>
+							<div class="info-value">29Y 2M</div>
+						</div>
+						<div class="info-item">
+							<div class="info-label">Gender</div>
+							<div class="info-value">Male</div>
+						</div>
+						<div class="info-item">
+							<div class="info-label">Phone Number</div>
+							<div class="info-value">+123 456 7890</div>
+						</div>
+						<div class="info-item">
+							<div class="info-label">Email Id</div>
+							<div class="info-value">henry@gmail.com</div>
+						</div>
+						<div class="info-item">
+							<div class="info-label">Address</div>
+							<div class="info-value">123 Main Street, Springfield, IL 62701</div>
+						</div>
+						<div class="info-item">
+							<div class="info-label">Date of Birth</div>
+							<div class="info-value">30/04/1996</div>
+						</div>
+						<div class="info-item">
+							<div class="info-label">Blood Group</div>
+							<div class="info-value">O+</div>
+						</div>
+						<div class="info-item">
+							<div class="info-label">Marital Status</div>
+							<div class="info-value">Married</div>
+						</div>
+					</div>
+					<div class="divider"></div>
+					<div class="section-title">Medical Information</div>
+					<div class="info-grid">
+						<div class="info-item">
+							<div class="info-label">Primary Physician</div>
+							<div class="info-value">Dr. Emily Davies</div>
+						</div>
+						<div class="info-item">
+							<div class="info-label">Known Allergies</div>
+							<div class="info-value">Penicillin</div>
+						</div>
+						<div class="info-item">
+							<div class="info-label">Chronic Conditions</div>
+							<div class="info-value">Hypertension (Diagnosed: 01/01/2022)</div>
+						</div>
+						<div class="info-item">
+							<div class="info-label">Current Medications</div>
+							<div class="info-value">Albuterol 50mg daily, Metformin 50mg daily</div>
+						</div>
+						<div class="info-item">
+							<div class="info-label">Previous Surgeries</div>
+							<div class="info-value">Appendectomy (2020)</div>
+						</div>
+						<div class="info-item">
+							<div class="info-label">Blood Pressure</div>
+							<div class="info-value">130/85 mmHg (Last recorded: 01/03/2025)</div>
+						</div>
+						<div class="info-item">
+							<div class="info-label">Height</div>
+							<div class="info-value">5'11" (180 cm)</div>
+						</div>
+						<div class="info-item">
+							<div class="info-label">Weight</div>
+							<div class="info-value">78 kg (172 lbs)</div>
+						</div>
+						<div class="info-item">
+							<div class="info-label">BMI</div>
+							<div class="info-value">24.1 (Normal)</div>
+						</div>
+					</div>
+				</div>
+				<!-- Medication Tab -->
+				<div class="tab-content" id="medication">
+					<div class="section-title">Current Medications</div>
+					<div class="medication-grid">
+						<div class="medication-card">
+							<div class="medication-icon">
+								<i class="fas fa-capsules"></i>
+							</div>
+							<div class="medication-details">
+								<div class="medication-name">Metformin</div>
+								<div class="medication-dosage">500mg, Once daily</div>
+								<div class="medication-schedule">
+									<i class="far fa-clock"></i> Morning, After breakfast </div>
+							</div>
+						</div>
+						<div class="medication-card">
+							<div class="medication-icon">
+								<i class="fas fa-pills"></i>
+							</div>
+							<div class="medication-details">
+								<div class="medication-name">Lisinopril</div>
+								<div class="medication-dosage">10mg, Once daily</div>
+								<div class="medication-schedule">
+									<i class="far fa-clock"></i> Evening, Before dinner </div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Lab Report Tab -->
+				<div class="tab-content" id="lab-report">
+					<div class="section-title">Recent Laboratory Reports</div>
+					<div class="lab-reports">
+						<div class="lab-report-item">
+							<div class="lab-report-header">
+								<div class="lab-report-title">
+									<i class="fas fa-file-medical"></i> Comprehensive Metabolic Panel </div>
+								<div class="lab-report-date">March 5, 2025</div>
+							</div>
+							<div class="lab-report-content">
+								<div class="lab-report-test">
+									<div class="lab-test-name">Glucose (Fasting)</div>
+									<div class="lab-test-result normal-result">95 mg/dL</div>
+								</div>
+								<div class="lab-report-test">
+									<div class="lab-test-name">Creatinine</div>
+									<div class="lab-test-result normal-result">0.9 mg/dL</div>
+								</div>
+								<div class="lab-report-test">
+									<div class="lab-test-name">BUN (Blood Urea Nitrogen)</div>
+									<div class="lab-test-result normal-result">15 mg/dL</div>
+								</div>
+								<div class="lab-report-test">
+									<div class="lab-test-name">ALT (Alanine Aminotransferase)</div>
+									<div class="lab-test-result normal-result">22 U/L</div>
+								</div>
+								<div class="lab-report-test">
+									<div class="lab-test-name">AST (Aspartate Aminotransferase)</div>
+									<div class="lab-test-result normal-result">18 U/L</div>
+								</div>
+							</div>
+						</div>
+						<div class="lab-report-item">
+							<div class="lab-report-header">
+								<div class="lab-report-title">
+									<i class="fas fa-file-medical"></i> Lipid Panel </div>
+								<div class="lab-report-date">February 22, 2025</div>
+							</div>
+							<div class="lab-report-content">
+								<div class="lab-report-test">
+									<div class="lab-test-name">Total Cholesterol</div>
+									<div class="lab-test-result normal-result">185 mg/dL</div>
+								</div>
+								<div class="lab-report-test">
+									<div class="lab-test-name">HDL Cholesterol</div>
+									<div class="lab-test-result normal-result">52 mg/dL</div>
+								</div>
+								<div class="lab-report-test">
+									<div class="lab-test-name">LDL Cholesterol</div>
+									<div class="lab-test-result abnormal-result">131 mg/dL</div>
+								</div>
+								<div class="lab-report-test">
+									<div class="lab-test-name">Triglycerides</div>
+									<div class="lab-test-result normal-result">110 mg/dL</div>
+								</div>
+							</div>
+						</div>
+						<div class="lab-report-item">
+							<div class="lab-report-header">
+								<div class="lab-report-title">
+									<i class="fas fa-file-medical"></i> Complete Blood Count (CBC) </div>
+								<div class="lab-report-date">January 15, 2025</div>
+							</div>
+							<div class="lab-report-content">
+								<div class="lab-report-test">
+									<div class="lab-test-name">WBC (White Blood Cells)</div>
+									<div class="lab-test-result normal-result">7.2 K/μL</div>
+								</div>
+								<div class="lab-report-test">
+									<div class="lab-test-name">RBC (Red Blood Cells)</div>
+									<div class="lab-test-result normal-result">5.1 M/μL</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Chat Tab -->
+			<div class="tab-content" id="chat">
+				<div class="chat-container">
+					<div class="chat-messages">
+						<div class="message-container incoming">
+							<div class="message-avatar">
+								<img src="/api/placeholder/36/36" alt="Doctor Avatar">
+							</div>
+							<div class="message-content">
+								<div class="message-sender">Dr. Emily Davies</div>
+								<div class="message-text">Hello Henry, how are you feeling today?</div>
+								<div class="message-time">2:45 PM</div>
+							</div>
+						</div>
+						<div class="message-container outgoing">
+							<div class="message-avatar">
+								<img src="/api/placeholder/36/36" alt="Patient Avatar">
+							</div>
+							<div class="message-content">
+								<div class="message-text">Hi Dr. Davies, I'm doing okay. Just wanted to check about my recent lab results.</div>
+								<div class="message-time">2:47 PM</div>
+							</div>
+						</div>
+					</div>
+					<div class="chat-input-container">
+						<button class="chat-attachment-button">
+							<i class="fas fa-paperclip"></i>
+						</button>
+						<input type="text" class="chat-input" placeholder="Type your message...">
+						<div class="chat-actions">
+							<button class="chat-action-button">
+								<i class="fas fa-paper-plane"></i>
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script>
+		document.addEventListener('DOMContentLoaded', function() {
+			// Tab switching functionality
+			const tabs = document.querySelectorAll('.tab');
+			const tabContents = document.querySelectorAll('.tab-content');
+			tabs.forEach(tab => {
+				tab.addEventListener('click', function() {
+					// Get the data-tab attribute of the clicked tab
+					const tabId = this.getAttribute('data-tab');
+					// Remove active class from all tabs and tab contents
+					tabs.forEach(t => t.classList.remove('active'));
+					tabContents.forEach(tc => tc.classList.remove('active'));
+					// Add active class to clicked tab
+					this.classList.add('active');
+					// Show the corresponding tab content
+					const activeTabContent = document.getElementById(tabId);
+					if(activeTabContent) {
+						activeTabContent.classList.add('active');
+					}
+				});
+			});
+		});
+		</script>
+</body>
+
+</html>
