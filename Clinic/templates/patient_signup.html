@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Medical Service Login</title>
+	<link rel="stylesheet" href="patient_signup.css">
+</head>
+
+<body>
+	<div class="background-wave"></div>
+	<div class="background-wave-2"></div>
+	<div class="login-container">
+		<div class="left-panel">
+			<a href="homepage.html" class="back-button"> ← Back </a>
+			<div class="left-wave"></div>
+			<h1>Expert Insights at <br>Your Fingertips</h1>
+			<ul class="feature-list">
+				<li class="feature-item">
+					<div class="circle-icon">1</div>
+					<span>Expert advice from top doctors</span>
+				</li>
+				<li class="feature-item">
+					<div class="circle-icon">2</div>
+					<span>Reliable Medical Service</span>
+				</li>
+				<li class="feature-item">
+					<div class="circle-icon">3</div>
+					<span>Join the Dr. Bangladesh Family</span>
+				</li>
+			</ul>
+		</div>
+		<div class="right-panel">
+			<div class="tab-controls">
+				<div class="tab active" id="patient-tab">
+					<div class="tab-icon">
+						<span class="patient-icon"></span>
+					</div>
+					<span>Patient</span>
+				</div>
+			</div>
+			<h2 class="welcome-title">Create an Account</h2>
+			<p class="welcome-text">Sign up to join our community and access personalized healthcare services.</p>
+			<form id="signup-form">
+				<div class="name-fields">
+					<div class="form-group">
+						<label for="firstName">First Name</label>
+						<input type="text" id="firstName" name="firstName" placeholder="First Name" required>
+					</div>
+					<div class="form-group">
+						<label for="lastName">Last Name</label>
+						<input type="text" id="lastName" name="lastName" placeholder="Last Name" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="email">Email Address</label>
+					<input type="email" id="email" name="email" placeholder="Email Address" required>
+				</div>
+				<div class="form-group">
+					<label for="phone">Phone Number</label>
+					<input type="tel" id="phone" name="phone" placeholder="Phone Number" required>
+				</div>
+				<div class="gender-dob-fields">
+					<div class="form-group">
+						<label for="gender">Gender</label>
+						<select id="gender" name="gender" required>
+							<option value="" disabled selected>Select gender</option>
+							<option value="male">Male</option>
+							<option value="female">Female</option>
+							<option value="other">Other</option>
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="dob">Date of Birth</label>
+						<input type="date" id="dob" name="dob" required>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="password">Password</label>
+					<input type="password" id="password" name="password" placeholder="Password" required>
+				</div>
+				<div class="form-group">
+					<label for="confirmPassword">Confirm Password</label>
+					<input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required>
+				</div>
+				<div class="checkbox-container">
+					<input type="checkbox" id="termsAgree" name="termsAgree" required>
+					<label for="termsAgree">I accept and agree to <a href="#" id="terms-link">Terms of Services</a> and <a href="#" id="privacy-link">Privacy Policy</a></label>
+				</div>
+				<button type="submit" class="submit-button">Sign Up</button>
+				<div class="login-link"> Already have an account? <a href="updated_login.html">Login</a>
+				</div>
+			</form>
+		</div>
+	</div>
+	<!-- Terms of Service Modal -->
+	<div id="terms-modal" class="modal">
+		<div class="modal-content">
+			<span class="close-modal" id="close-terms">&times;</span>
+			<h2 class="modal-title">Terms of Service</h2>
+			<div class="modal-body">
+				<h3>1. Acceptance of Terms</h3>
+				<p>By accessing or using HeyDoctor services, you agree to be bound by these Terms of Service.</p>
+				<h3>2. Description of Service</h3>
+				<p>HeyDoctor provides a platform connecting patients with healthcare professionals. We do not provide medical services directly.</p>
+				<h3>3. User Accounts</h3>
+				<p>You are responsible for maintaining the confidentiality of your account information and for all activities that occur under your account.</p>
+				<h3>4. User Conduct</h3>
+				<p>You agree not to use the service for any illegal or unauthorized purpose. You must not transmit any worms, viruses or any code of a destructive nature.</p>
+				<h3>5. Medical Advice Disclaimer</h3>
+				<p>The content provided through our service is for informational purposes only and is not a substitute for professional medical advice, diagnosis, or treatment.</p>
+				<h3>6. Privacy</h3>
+				<p>Your use of HeyDoctor services is subject to our Privacy Policy, which is incorporated into these Terms by reference.</p>
+				<h3>7. Termination</h3>
+				<p>We reserve the right to terminate or suspend your account and access to our services at our sole discretion, without notice, for conduct that we believe violates these Terms or is harmful to other users or us.</p>
+				<h3>8. Limitation of Liability</h3>
+				<p>HeyDoctor shall not be liable for any indirect, incidental, special, consequential or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses.</p>
+				<h3>9. Changes to Terms</h3>
+				<p>We reserve the right to modify these terms at any time. We will provide notice of significant changes to these terms by posting the new terms on the site.</p>
+				<h3>10. Governing Law</h3>
+				<p>These Terms shall be governed by and construed in accordance with the laws of the jurisdiction in which HeyDoctor operates, without regard to its conflict of law provisions.</p>
+			</div>
+		</div>
+	</div>
+	<!-- Privacy Policy Modal -->
+	<div id="privacy-modal" class="modal">
+		<div class="modal-content">
+			<span class="close-modal" id="close-privacy">&times;</span>
+			<h2 class="modal-title">Privacy Policy</h2>
+			<div class="modal-body">
+				<h3>1. Information We Collect</h3>
+				<p>We collect personal information that you provide to us, including but not limited to your name, email address, phone number, gender, date of birth, and health information.</p>
+				<h3>2. How We Use Your Information</h3>
+				<p>We use your information to provide and improve our services, communicate with you, and comply with legal obligations. We may use your health information to connect you with appropriate healthcare providers.</p>
+				<h3>3. Information Sharing</h3>
+				<p>We may share your information with healthcare providers you choose to connect with through our platform. We may also share your information with third-party service providers who help us operate our service.</p>
+				<h3>4. Data Security</h3>
+				<p>We implement appropriate security measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction.</p>
+				<h3>5. Your Rights</h3>
+				<p>You have the right to access, correct, or delete your personal information. You may also have the right to restrict or object to certain processing of your information.</p>
+				<h3>6. Children's Privacy</h3>
+				<p>Our services are not intended for use by individuals under the age of 18 without parental consent. We do not knowingly collect personal information from children under 18.</p>
+				<h3>7. Cookies and Tracking Technologies</h3>
+				<p>We use cookies and similar tracking technologies to track activity on our service and hold certain information. You can instruct your browser to refuse all cookies or to indicate when a cookie is being sent.</p>
+				<h3>8. Changes to Privacy Policy</h3>
+				<p>We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the "effective date" at the top of this Privacy Policy.</p>
+				<h3>9. Contact Us</h3>
+				<p>If you have any questions about this Privacy Policy, please contact us at privacy@heydoctor.com.</p>
+			</div>
+		</div>
+	</div>
+	<script>
+	document.addEventListener('DOMContentLoaded', function() {
+		const tabs = document.querySelectorAll('.tab');
+		tabs.forEach(tab => {
+			tab.addEventListener('click', function() {
+				tabs.forEach(t => t.classList.remove('active'));
+				this.classList.add('active');
+			});
+		});
+		const form = document.getElementById('signup-form');
+		form.addEventListener('submit', function(e) {
+			e.preventDefault();
+			// Validate passwords match
+			const password = document.getElementById('password').value;
+			const confirmPassword = document.getElementById('confirmPassword').value;
+			if(password !== confirmPassword) {
+				alert("Passwords don't match!");
+				return;
+			}
+			alert('Account creation successful!');
+			// In a real app, you would submit the form data to your server here
+		});
+		// Terms modal functionality
+		const termsModal = document.getElementById('terms-modal');
+		const termsLink = document.getElementById('terms-link');
+		const closeTerms = document.getElementById('close-terms');
+		termsLink.addEventListener('click', function(e) {
+			e.preventDefault();
+			termsModal.style.display = 'flex';
+		});
+		closeTerms.addEventListener('click', function() {
+			termsModal.style.display = 'none';
+		});
+		// Privacy modal functionality
+		const privacyModal = document.getElementById('privacy-modal');
+		const privacyLink = document.getElementById('privacy-link');
+		const closePrivacy = document.getElementById('close-privacy');
+		privacyLink.addEventListener('click', function(e) {
+			e.preventDefault();
+			privacyModal.style.display = 'flex';
+		});
+		closePrivacy.addEventListener('click', function() {
+			privacyModal.style.display = 'none';
+		});
+		// Close modals when clicking outside
+		window.addEventListener('click', function(e) {
+			if(e.target === termsModal) {
+				termsModal.style.display = 'none';
+			}
+			if(e.target === privacyModal) {
+				privacyModal.style.display = 'none';
+			}
+		});
+	});
+	</script>
+</body>
+
+</html>
