@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Service Login</title>
+    <link rel="stylesheet" href="updated_login.css">
+</head>
+<body>
+    <div class="background-wave"></div>
+    <div class="background-wave-2"></div>
+    <div class="login-container">
+        <div class="left-panel">
+            <a href="homepage.html" class="back-button">
+                ← Back
+            </a>
+            <div class="left-wave"></div>
+            <h1>Expert Insights at <br>Your Fingertips</h1>
+            <ul class="feature-list">
+                <li class="feature-item">
+                    <div class="circle-icon">1</div>
+                    <span>Expert advice from top doctors</span>
+                </li>
+                <li class="feature-item">
+                    <div class="circle-icon">2</div>
+                    <span>Reliable Medical Service</span>
+                </li>
+                <li class="feature-item">
+                    <div class="circle-icon">3</div>
+                    <span>Join the HeyDoctor Family</span>
+                </li>
+            </ul>
+        </div>
+        <div class="right-panel">
+            <div class="tab-controls">
+                <div class="tab active" id="patient-tab">
+                    <div class="tab-icon">
+                        <span class="patient-icon"></span>
+                    </div>
+                    <span>Patient</span>
+                </div>
+                <div class="tab" id="doctor-tab">
+                    <div class="tab-icon">
+                        <span class="doctor-icon"></span>
+                    </div>
+                    <span>Doctor</span>
+                </div>
+            </div>
+            <h2 class="welcome-text">Welcome back</h2>
+            <p class="login-instruction">Log in to your account and we'll get you to service section.</p>
+            <form class="login-form">
+                <div class="form-group">
+                    <label class="form-label">Email Address</label>
+                    <input type="email" class="form-input" placeholder="Email Address">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" class="form-input" placeholder="Password">
+                </div>
+                <button type="button" class="signin-btn">Sign In</button>
+                <div class="signup-link">
+                    Don't have an account? <a href="#">Sign up</a>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <script>
+        const patientTab = document.getElementById('patient-tab');
+        const doctorTab = document.getElementById('doctor-tab');
+        
+        patientTab.addEventListener('click', function() {
+            patientTab.classList.add('active');
+            doctorTab.classList.remove('active');
+        });
+        
+        doctorTab.addEventListener('click', function() {
+            doctorTab.classList.add('active');
+            patientTab.classList.remove('active');
+        });
+        
+    </script>
+</body>
+</html>
